@@ -118,6 +118,41 @@ const Navbar = () => {
                   />
                 </div>
               </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              >
+                <div className="flex flex-col items-center justify-center">
+                  <img
+                    className="rounded-full size-16"
+                    alt="Tailwind CSS Navbar component"
+                    referrerPolicy="no-referrer"
+                    src={user?.photoURL}
+                  />
+                  <p className="mt-1  "> {user?.displayName}</p>
+                  <p className="mt-1 mb-1  "> {user?.email}</p>
+                </div>
+                <div className="divider my-0"></div>
+                <Link
+                  to="/profile"
+                  className="hover:text-purple-500  text-center"
+                >
+                  User Profile
+                </Link>
+                <Link
+                  to="/updateProfile"
+                  className="hover:text-purple-500 text-center"
+                >
+                  Update Profile
+                </Link>
+                <Link
+                className="mt-2 text-center bg-gradient-to-r from-indigo-500 via-blue-600 to-cyan-500 text-white px-5 py-2 rounded-full shadow-md 
+                hover:shadow-lg hover:shadow-cyan-500/50 transition duration-300 ease-in-out transform hover:scale-105"
+                  onClick={handleSign}
+                >
+                  Sign Out
+                </Link>
+              </ul>
             </div>
           ) : (
             <Link
