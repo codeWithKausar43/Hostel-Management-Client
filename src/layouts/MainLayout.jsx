@@ -1,9 +1,17 @@
+import { Outlet } from "react-router-dom";
+import Navbar from "../components/Navbar";
+ 
+
  
 
 const MainLayout = () => {
     return (
         <div>
-            <h3>asdf</h3>
+            <Navbar></Navbar>
+            <div className="min-h-[330px]">
+            <Outlet></Outlet>
+            </div>
+      
         </div>
     );
 };
