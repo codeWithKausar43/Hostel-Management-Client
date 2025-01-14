@@ -8,6 +8,7 @@ import Dashboard from "../layouts/Dashboard";
 import UserProfile from "../Page/UserProfile";
 import UpdateProfile from "../Page/UpdateProfile";
 import { Profiler } from "react";
+import AllUser from "../Page/Dashboard/AllUser/AllUser";
 
 const router = createBrowserRouter([
   {
@@ -43,8 +44,12 @@ const router = createBrowserRouter([
     element:<Dashboard></Dashboard>,
     children:[
       {
-        path:"/dashboard",
+        path:"/dashboard/adminProfile",
         element:<UserProfile></UserProfile>
+      },
+      {
+        path:"/dashboard/manageUsers",
+        element:<AllUser></AllUser>
       }
     ]
   }

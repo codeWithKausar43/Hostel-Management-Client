@@ -7,7 +7,7 @@ import { RiMapPinAddFill } from 'react-icons/ri';
 import { NavLink, Outlet } from 'react-router-dom';
 
 const Dashboard = () => {
-    const isAdmin = false
+    const isAdmin = true
     return (
         <div className="flex mx-auto md:w-[70%]">
             {/*  dashboard side bar*/}
@@ -16,25 +16,25 @@ const Dashboard = () => {
                    {
                     isAdmin ? <div className='my-12'>
                       <li> 
-                        <NavLink to="/dashboard" className="mb-2"><GrUserAdmin /> Admin Profile </NavLink>
+                        <NavLink to="/dashboard/adminProfile" className="mb-2"><GrUserAdmin /> Admin Profile </NavLink>
                     </li>
                     <li> 
-                        <NavLink to="/dashboard" className="mb-2"><MdManageAccounts/> Manage Users</NavLink>
+                        <NavLink to="/dashboard/manageUsers" className="mb-2"><MdManageAccounts/> Manage Users</NavLink>
                     </li>
                     <li> 
-                        <NavLink to="/dashboard" className="mb-2"><RiMapPinAddFill /> Add Meal</NavLink>
+                        <NavLink to="/dashboard/addMeal" className="mb-2"><RiMapPinAddFill /> Add Meal</NavLink>
                     </li>
                     <li> 
-                        <NavLink to="/dashboard" className="mb-2"><MdFastfood/> All Meals </NavLink>
+                        <NavLink to="/dashboard/allMeals" className="mb-2"><MdFastfood/> All Meals </NavLink>
                     </li>
                     <li> 
-                        <NavLink to="/dashboard" className="mb-2"><MdRateReview/> All Reviews</NavLink>
+                        <NavLink to="/dashboard/allReviews" className="mb-2"><MdRateReview/> All Reviews</NavLink>
                     </li>
                     <li> 
-                        <NavLink to="/dashboard" className="mb-2"><MdRestaurantMenu/> Serve Meals</NavLink>
+                        <NavLink to="/dashboard/serveMeals" className="mb-2"><MdRestaurantMenu/> Serve Meals</NavLink>
                     </li>
                     <li> 
-                        <NavLink to="/dashboard" className="mb-2"><FaCalendarAlt/>Upcoming Meals</NavLink>
+                        <NavLink to="/dashboard/upcomingMeals" className="mb-2"><FaCalendarAlt/>Upcoming Meals</NavLink>
                     </li>
                     <div className="divider"></div>
                     </div>
