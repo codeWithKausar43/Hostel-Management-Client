@@ -5,8 +5,10 @@ import { useContext, useRef } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet";
+import useAxiosOpen from "../hooks/useAxiosOpen";
 
 const Login = () => {
+  const axiosOpen = useAxiosOpen()
   const emailRef = useRef();
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,11 +34,26 @@ const Login = () => {
       });
   };
   const handleGoogle = () => {
-    handleGoogleLogin()
-      .then((result) => {
-        navigate(location.state.from);
-      })
-      .catch((error) => navigate("/"));
+    handleGoogleLogin().then((result) => {
+      const userInfo = {
+        email: result.user?.email,
+        name: result.user?.displayName,
+        photoUrl: result.user?.photoURL,
+        role: "platinum",
+      };
+      axiosOpen.post("/user", userInfo)
+        .then((res) => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Successful SignUp",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate(location.state.from);
+        })
+        .catch((error) => navigate("/"));
+    }); 
   };
 
   const handleForget = () => {

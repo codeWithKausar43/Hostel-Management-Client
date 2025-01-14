@@ -9,25 +9,27 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Lottie from "lottie-react";
 import resisterLottieData from "../assets/lottie/resister.json";
+import useAxiosOpen from "../hooks/useAxiosOpen";
+import Swal from "sweetalert2";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Register = () => {
+  const axiosOpen = useAxiosOpen();
   const { handleResister, manageProfile, handleGoogleLogin } =
     useContext(AuthContext);
   const navigate = useNavigate();
-  const [photoFile, setPhotoFile] = useState(null); 
+  const [photoFile, setPhotoFile] = useState(null);
   const {
     control,
     handleSubmit,
     formState: { errors },
     reset,
-    setError,  
-    clearErrors, 
+    setError,
+    clearErrors,
   } = useForm();
 
-   
   const uploadImage = async (image) => {
     const formData = new FormData();
     formData.append("image", image);
@@ -38,7 +40,7 @@ const Register = () => {
         body: formData,
       });
       const data = await response.json();
- 
+
       if (data?.success) {
         return data?.data?.url;
       } else {
@@ -57,7 +59,7 @@ const Register = () => {
       setError("photoFile", {
         type: "manual",
         message: "Please upload a photo!",
-      });  
+      });
       return;
     }
 
@@ -66,13 +68,30 @@ const Register = () => {
     handleResister(email, password)
       .then((result) => {
         if (imageUrl) {
-          manageProfile(Username, imageUrl); 
+          manageProfile(Username, imageUrl);
         } else {
-          manageProfile(Username, null);                    
+          manageProfile(Username, null);
         }
-        reset();
-        toast.success("Successful Resister!!");
-        navigate("/");
+        // create user db
+        const userInfo = {
+          name: data.Username,
+          email: data.email,
+          photoUrl: imageUrl,
+          role: 'platinum'
+        };
+        axiosOpen.post("/user", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            reset();
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Successful SignUp",
+              showConfirmButton: false,
+              timer: 1500
+            });
+            navigate("/");
+          }
+        });
       })
       .catch((error) => {
         toast.error(error.message);
@@ -80,16 +99,34 @@ const Register = () => {
   };
 
   const handleGoogle = () => {
-    handleGoogleLogin().then(() => {
-      navigate("/"); 
+    handleGoogleLogin().then((result) => {
+        const userInfo ={
+          email: result.user?.email,
+          name: result.user?.displayName,
+          photoUrl: result.user?.photoURL,
+          role:'platinum'
+          
+        }
+        axiosOpen.post("/user", userInfo)
+        .then(res => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Successful SignUp",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          navigate("/");
+        })
+       
     });
   };
- 
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setPhotoFile(file);  
-      clearErrors("photoFile");  
+      setPhotoFile(file);
+      clearErrors("photoFile");
     }
   };
 
@@ -195,10 +232,7 @@ const Register = () => {
 
                       {/* Photo file upload */}
                       <div className="flex border p-2 justify-between rounded-md border-gray-400 items-center">
-                        <label
-                          htmlFor="photoFile"
-                          className="cursor-pointer"
-                        >
+                        <label htmlFor="photoFile" className="cursor-pointer">
                           <div className="flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition-all duration-200">
                             <span>Upload Photo</span>
                           </div>
@@ -208,11 +242,10 @@ const Register = () => {
                           type="file"
                           accept="image/*"
                           className="hidden"
-                          onChange={handleFileChange} 
+                          onChange={handleFileChange}
                         />
                         {photoFile && (
                           <div>
-                            
                             <img
                               src={URL.createObjectURL(photoFile)}
                               alt="Uploaded Preview"

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import { FaMoon, FaSun } from "react-icons/fa";
-import nameLogo from "../assets/l.png"
+import nameLogo from "../assets/l.png";
 import { IoMdNotifications } from "react-icons/io";
 const Navbar = () => {
   const navigate = useNavigate();
@@ -28,39 +28,37 @@ const Navbar = () => {
   };
   const link = (
     <div className=" flex-col md:flex md:gap-3 w-full">
- 
-        <div className=" md:flex md:gap-3 *:block w-full">
-          <NavLink
-            className={({ isActive }) =>
-              ` ${isActive ? "text-purple-500 underline " : "text-md"}`
-            }
-            to="/"
-          >
-            Home
-          </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              `${isActive ? "text-purple-500 underline" : ""}`
-            }
-            to="/meals"
-          >
-            Meals
-          </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              `${isActive ? "text-purple-500 underline " : "text-md"}`
-            }
-            to="/upcomingMeals"
-          >
-            Upcoming Meals
-          </NavLink>
-          
-        </div>
+      <div className=" md:flex md:gap-3 *:block w-full">
+        <NavLink
+          className={({ isActive }) =>
+            ` ${isActive ? "text-purple-500 underline " : "text-md"}`
+          }
+          to="/"
+        >
+          Home
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            `${isActive ? "text-purple-500 underline" : ""}`
+          }
+          to="/meals"
+        >
+          Meals
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            `${isActive ? "text-purple-500 underline " : "text-md"}`
+          }
+          to="/upcomingMeals"
+        >
+          Upcoming Meals
+        </NavLink>
+      </div>
     </div>
   );
   return (
     <div className="py-4 sticky top-0 z-20 bg-white/30  backdrop-blur-xl">
-      <div className="navbar   flex mx-auto md:w-[70%]  text-black font-semibold ">
+      <div className="navbar   flex mx-auto md:w-[90%] lg:w-[70%]  text-black font-semibold ">
         <div className="dropdown">
           <div tabIndex={0} role="button" className=" lg:hidden">
             <svg
@@ -82,27 +80,25 @@ const Navbar = () => {
             tabIndex={0}
             className=" dropdown-content min-w-[200px] bg-base-100 rounded-box z-[1] mt-3 p-4 shadow"
           >
-           <div className="">
-            <li>
-            {link}
-            </li>
-           </div>
+            <div className="">
+              <li>{link}</li>
+            </div>
           </ul>
         </div>
         <div className="flex-1">
-            <img className="w-52" src={nameLogo} alt="" /> 
+          <img className="w-52" src={nameLogo} alt="" />
         </div>
         <div className="flex-none">
           <div className="hidden lg:flex mr-4">{link}</div>
           <IoMdNotifications className="text-2xl" />
 
           <button className="mx-3" onClick={toggleTheme}>
-          {currentTheme === "light" ? (
-            <FaMoon className="text-2xl hover:shadow-2xl z-50 text-yellow-300 "></FaMoon>
-          ) : (
-            <FaSun className="text-2xl text-white"></FaSun>
-          )}
-        </button>
+            {currentTheme === "light" ? (
+              <FaMoon className="text-2xl hover:shadow-2xl z-50 text-yellow-300 "></FaMoon>
+            ) : (
+              <FaSun className="text-2xl text-white"></FaSun>
+            )}
+          </button>
           {user ? (
             <div className="dropdown dropdown-end">
               <div
@@ -124,29 +120,30 @@ const Navbar = () => {
               >
                 <div className="flex flex-col items-center justify-center">
                   <img
-                    className="rounded-full size-16"
+                    className="rounded-full object-cover size-16"
                     alt="Tailwind CSS Navbar component"
                     referrerPolicy="no-referrer"
                     src={user?.photoURL}
                   />
                   <p className="mt-1  "> {user?.displayName}</p>
                   <p className="mt-1 mb-1  "> {user?.email}</p>
+                 
                 </div>
                 <div className="divider my-0"></div>
+                <div className=" flex flex-col justify-start">
+                  <Link
+                    to="/profile"
+                    className="hover:text-purple-500 hover:bg-gray-400 p-1 px-3 transition-colors duration-300 rounded-md"
+                  >
+                    User Profile
+                  </Link>
+                  <Link to="dashboard" className="hover:text-purple-500 hover:bg-gray-400 p-1 px-3 transition-colors duration-300 rounded-md">Dashboard</Link>
+                  <Link to="/updateProfile" className="hover:text-purple-500 hover:bg-gray-400 p-1 px-3 transition-colors duration-300 rounded-md">
+                    Update Profile
+                  </Link>
+                </div>
                 <Link
-                  to="/profile"
-                  className="hover:text-purple-500  text-center"
-                >
-                  User Profile
-                </Link>
-                <Link
-                  to="/updateProfile"
-                  className="hover:text-purple-500 text-center"
-                >
-                  Update Profile
-                </Link>
-                <Link
-                className="mt-2 text-center bg-gradient-to-r from-indigo-500 via-blue-600 to-cyan-500 text-white px-5 py-2 rounded-full shadow-md 
+                  className="mt-2 text-center bg-gradient-to-r from-indigo-500 via-blue-600 to-cyan-500 text-white px-5 py-2 rounded-full shadow-md 
                 hover:shadow-lg hover:shadow-cyan-500/50 transition duration-300 ease-in-out transform hover:scale-105"
                   onClick={handleSign}
                 >
@@ -164,8 +161,6 @@ const Navbar = () => {
             </Link>
           )}
         </div>
-
-        
       </div>
     </div>
   );
