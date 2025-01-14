@@ -1,8 +1,8 @@
 import React from 'react';
-import { FaCalendarAlt, FaCcAmazonPay,} from 'react-icons/fa';
+import { FaCalendarAlt, FaCcAmazonPay, FaEnvelope, FaSearch,} from 'react-icons/fa';
 import { GrUserAdmin } from 'react-icons/gr';
 import { ImProfile } from 'react-icons/im';
-import { MdFastfood, MdManageAccounts, MdNoMeals, MdOutlineRateReview, MdRateReview, MdRestaurantMenu,} from 'react-icons/md';
+import { MdFastfood, MdHome, MdManageAccounts, MdNoMeals, MdOutlineRateReview, MdRateReview, MdRestaurantMenu,} from 'react-icons/md';
 import { RiMapPinAddFill } from 'react-icons/ri';
 import { NavLink, Outlet } from 'react-router-dom';
 
@@ -58,9 +58,14 @@ const Dashboard = () => {
                     {/* sheared component */}
               
                     <li className='-mt-12'> 
-                        <NavLink to="/">Home</NavLink>
+                        <NavLink to="/"><MdHome></MdHome> Home</NavLink>
                     </li>
-                
+                    <li> 
+                        <NavLink to="/"> <FaSearch></FaSearch> Menu</NavLink>
+                    </li>
+                    <li> 
+                        <NavLink to="/"><FaEnvelope></FaEnvelope>Contact</NavLink>
+                    </li>
                     
                 </ul>
             </div>

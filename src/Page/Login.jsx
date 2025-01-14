@@ -39,7 +39,7 @@ const Login = () => {
         email: result.user?.email,
         name: result.user?.displayName,
         photoUrl: result.user?.photoURL,
-        role: "platinum",
+        role: "user",
       };
       axiosOpen.post("/user", userInfo)
         .then((res) => {

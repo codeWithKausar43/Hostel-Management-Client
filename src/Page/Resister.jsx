@@ -77,7 +77,7 @@ const Register = () => {
           name: data.Username,
           email: data.email,
           photoUrl: imageUrl,
-          role: 'platinum'
+          role: 'user'
         };
         axiosOpen.post("/user", userInfo).then((res) => {
           if (res.data.insertedId) {
@@ -104,7 +104,7 @@ const Register = () => {
           email: result.user?.email,
           name: result.user?.displayName,
           photoUrl: result.user?.photoURL,
-          role:'platinum'
+          role:'user'
           
         }
         axiosOpen.post("/user", userInfo)

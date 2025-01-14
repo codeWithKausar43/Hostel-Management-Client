@@ -5,6 +5,7 @@ import Login from "../Page/Login";
 import Register from "../Page/Resister";
 import Home from "../Page/Home";
 import Dashboard from "../layouts/Dashboard";
+import UserProfile from "../Page/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
     children:[
       {
         path:"/dashboard",
-        element:<p>My Profile</p>
+        element:<UserProfile></UserProfile>
       }
     ]
   }
