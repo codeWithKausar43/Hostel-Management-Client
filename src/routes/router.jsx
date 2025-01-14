@@ -6,6 +6,8 @@ import Register from "../Page/Resister";
 import Home from "../Page/Home";
 import Dashboard from "../layouts/Dashboard";
 import UserProfile from "../Page/UserProfile";
+import UpdateProfile from "../Page/UpdateProfile";
+import { Profiler } from "react";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +26,15 @@ const router = createBrowserRouter([
        {
         path:"/resister", 
         element: <Register></Register>
-       }
+       },
+       {
+        path:"/updateProfile",
+        element:<UpdateProfile></UpdateProfile>
+       },
+       {
+        path: "/profile",
+        element: <Profiler />, 
+      },
         
     ],
   },

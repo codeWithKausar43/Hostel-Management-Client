@@ -131,12 +131,7 @@ const Navbar = () => {
                 </div>
                 <div className="divider my-0"></div>
                 <div className=" flex flex-col justify-start">
-                  <Link
-                    to="/profile"
-                    className="hover:text-purple-500 hover:bg-gray-400 p-1 px-3 transition-colors duration-300 rounded-md"
-                  >
-                    User Profile
-                  </Link>
+                  
                   <Link to="dashboard" className="hover:text-purple-500 hover:bg-gray-400 p-1 px-3 transition-colors duration-300 rounded-md">Dashboard</Link>
                   <Link to="/updateProfile" className="hover:text-purple-500 hover:bg-gray-400 p-1 px-3 transition-colors duration-300 rounded-md">
                     Update Profile
