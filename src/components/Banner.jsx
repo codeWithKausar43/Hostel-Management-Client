@@ -6,7 +6,7 @@ import banner4 from "../assets/banner4.jpg";
 import BannerTitle from "../sheard/BannerTitle";
 const Banner = () => {
   return (
-    <div className="mt-8 md:mb-0 border w-full relative">
+    <div className="mt-3 md:mb-0  w-full relative">
       <div className="carousel w-full">
         <div id="slide1" className="carousel-item relative w-full">
           <img
