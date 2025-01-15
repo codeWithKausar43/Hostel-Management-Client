@@ -3,6 +3,8 @@ import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 // Wrapper for DatePicker with forwardRef
@@ -20,6 +22,7 @@ const ForwardedDatePicker = React.forwardRef(
 );
 
 const AddMeal = () => {
+  const axiosSecure = useAxiosSecure()
   const { user } = useAuth();
   const [error, setError] = useState("");
   const [photoFile, setPhotoFile] = useState(null);
@@ -30,6 +33,7 @@ const AddMeal = () => {
     handleSubmit,
     formState: { errors },
     clearErrors,
+    reset
   } = useForm();
 
   const uploadImage = async (image) => {
@@ -77,8 +81,24 @@ const AddMeal = () => {
       like: 0,
       review: 0,
     };
-
     console.log(AddMealInfo);
+    axiosSecure.post("/meal", AddMealInfo).then(res => {
+    console.log(res.data)
+    if(res.data?.insertedId){
+      Swal.fire({
+        title:`${data.title} successful added to database`,
+        icon: "success",
+       timer: 1500
+      });
+    }
+    }).catch((error) => {
+      Swal.fire({
+        title:`${error.message}`,
+        icon: "error",
+        timer: 1500
+      });
+    })
+     
   };
 
   // Image change handler with validation
@@ -238,7 +258,7 @@ const AddMeal = () => {
           {/* Photo file upload */}
           <div className="flex justify-left rounded-md gap-4 items-end">
             <label htmlFor="photoFile" className="cursor-pointer">
-              <div className="flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition-all duration-200">
+              <div className="flex items-center justify-center bg-white text-black py-3 px-4 rounded-lg shadow-md hover:bg-blue-200 transition-all duration-200">
                 <span>Upload Photo</span>
               </div>
             </label>
