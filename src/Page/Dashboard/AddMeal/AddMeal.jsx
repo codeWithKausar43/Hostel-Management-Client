@@ -80,6 +80,7 @@ const AddMeal = () => {
       photoUrl: imageUrl,
       like: 0,
       review: 0,
+      rating:0
     };
     console.log(AddMealInfo);
     axiosSecure.post("/meal", AddMealInfo).then(res => {
