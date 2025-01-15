@@ -12,7 +12,7 @@ const UserProfile = () => {
     <div>
       <div className="w-[80%] mx-auto backdrop-blur-xl">
         <Helmet>
-          <title>My Profile || Service Review</title>
+          <title>My Profile || Hostel Management</title>
         </Helmet>
 
         <img

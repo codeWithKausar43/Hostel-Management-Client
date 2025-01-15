@@ -57,7 +57,7 @@ const Dashboard = () => {
               </li>
               <li>
                 <NavLink to="/dashboard/allMeals" className="mb-2">
-                  <MdFastfood /> All Meals{" "}
+                  <MdFastfood /> All Meals
                 </NavLink>
               </li>
               <li>
@@ -114,7 +114,6 @@ const Dashboard = () => {
           </li>
           <li>
             <NavLink to="/">
-              {" "}
               <FaSearch></FaSearch> Menu
             </NavLink>
           </li>
@@ -126,7 +125,7 @@ const Dashboard = () => {
         </ul>
       </div>
       {/*  dashboard content*/}
-      <div className="flex-1  mt-16 ml-12">
+      <div className="w-full mt-16 ml-12">
         <Outlet></Outlet>
       </div>
     </div>

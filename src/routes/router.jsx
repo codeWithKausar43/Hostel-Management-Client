@@ -9,6 +9,8 @@ import UserProfile from "../Page/UserProfile";
 import UpdateProfile from "../Page/UpdateProfile";
 import { Profiler } from "react";
 import AllUser from "../Page/Dashboard/AllUser/AllUser";
+ 
+import AddMeal from "../Page/Dashboard/AddMeal/Addmeal";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +52,10 @@ const router = createBrowserRouter([
       {
         path:"/dashboard/manageUsers",
         element:<AllUser></AllUser>
+      },
+      {
+        path:"/dashboard/addMeal",
+        element:<AddMeal></AddMeal>
       }
     ]
   }
