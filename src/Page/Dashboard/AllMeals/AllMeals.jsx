@@ -1,30 +1,53 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { SlLike } from "react-icons/sl";
+ 
 import { AiFillLike } from "react-icons/ai";
 import { IoEye } from "react-icons/io5";
 import { Rating } from "@smastrom/react-rating";
 import { RiDeleteBack2Fill } from "react-icons/ri";
 import { GrDocumentUpdate } from "react-icons/gr";
+import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 const AllMeals = () => {
-  const [meals, setMeals] = useState([]);
   const [sortBy, setSortBy] = useState("title");
   const axiosSecure = useAxiosSecure();
-  const fetchMeals = async (sortCriteria) => {
-    try {
-      const response = await axiosSecure.get(`/meals?sortBy=${sortCriteria}`);
-      setMeals(response.data);
-    } catch (error) {
-      console.error("Error fetching meals", error);
-    }
+
+const { data: meals = [], refetch} = useQuery({
+    queryKey: ["meals", sortBy],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/meals?sortBy=${sortBy}`);
+      return res.data;
+    },
+  });
+ 
+  //   meals deleted
+  const handleMealDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("meals deleted", id);
+        axiosSecure.delete(`/meals/${id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            refetch()
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
   };
-
-  useEffect(() => {
-    fetchMeals(sortBy);
-  }, [sortBy]);
-
   return (
     <div>
       <div className="flex justify-between mb-4">
@@ -50,7 +73,6 @@ const AllMeals = () => {
                 <th>Title</th>
                 <th>Name</th>
                 <th>Operation</th>
-                
               </tr>
             </thead>
             <tbody>
@@ -83,13 +105,22 @@ const AllMeals = () => {
                       {meal.name}
                     </span>
                   </td>
-                  
+
                   <td>
-                <div className="flex gap-3 ">  
-                <span className=" text-2xl bg-blue-400 p-3 btn hover:text-black text-white rounded-xl"><IoEye /></span>
-                <span className=" text-2xl hover:text-green-700 bg-blue-400 p-3 btn text-white rounded-xl"><GrDocumentUpdate /></span>
-                <span className=" text-2xl bg-blue-400 p-3 btn hover:text-red-700 text-white rounded-xl"><RiDeleteBack2Fill /></span>
-                </div>
+                    <div className="flex gap-3 ">
+                      <span className=" text-2xl bg-blue-400 p-3 btn hover:text-black text-white rounded-xl">
+                        <IoEye />
+                      </span>
+                      <span className=" text-2xl hover:text-green-700 bg-blue-400 p-3 btn text-white rounded-xl">
+                        <GrDocumentUpdate />
+                      </span>
+                      <span
+                        onClick={() => handleMealDelete(meal._id)}
+                        className=" text-2xl bg-blue-400 p-3 btn hover:text-red-700 text-white rounded-xl"
+                      >
+                        <RiDeleteBack2Fill />
+                      </span>
+                    </div>
                   </td>
                 </tr>
               ))}

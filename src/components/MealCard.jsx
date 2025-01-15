@@ -2,7 +2,7 @@ import { Rating } from "@smastrom/react-rating";
 import { useState } from "react";
 import "@smastrom/react-rating/style.css";
 const MealCard = ({ item }) => {
-  const { title, category, photoUrl, price, review, description } = item || {};
+  const { title, rating, category, photoUrl, price, review, description } = item || {};
   return (
      
     <div className="card bg-base-100 shadow-xl group overflow-hidden relative">
@@ -29,7 +29,7 @@ const MealCard = ({ item }) => {
     <div className="card-body">
       <div className="flex justify-between">
         <h2 className="card-title">{title}</h2>
-        <Rating style={{ maxWidth: 120 }} value={review} readOnly />
+        <Rating style={{ maxWidth: 120 }} value={rating} readOnly />
       </div>
       <p>{description?.length > 50 ? `${description.slice(0, 50)}...` : description}</p>
     </div>
