@@ -9,8 +9,9 @@ import UserProfile from "../Page/UserProfile";
 import UpdateProfile from "../Page/UpdateProfile";
 import { Profiler } from "react";
 import AllUser from "../Page/Dashboard/AllUser/AllUser";
- 
 import AddMeal from "../Page/Dashboard/AddMeal/Addmeal";
+import Meals from "../components/Meals";
+ 
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path:"/",
         element:<Home></Home>
+      },
+      {
+        path: "/meals",
+        element: <Meals></Meals>,
       },
       {
         path: "/login",
@@ -38,6 +43,7 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <Profiler />, 
       },
+      
         
     ],
   },
