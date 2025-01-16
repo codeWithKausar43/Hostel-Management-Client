@@ -8,11 +8,11 @@ import MealCard from "./MealCard";
  if(loading){
   return "Loading..."
  }
- const Upcoming = meals.filter((item) => item.category === 'Upcoming')
-console.log(Upcoming)
-const Dinner = meals.filter((item) => item.category === 'Dinner')
-const Lunch = meals.filter((item) => item.category === 'Lunch')
-const Breakfast  = meals.filter((item) => item.category === 'Breakfast')
+//  const Upcoming = meals.filter((item) => item.category === 'Upcoming')
+// console.log(Upcoming)
+// const Dinner = meals.filter((item) => item.category === 'Dinner')
+// const Lunch = meals.filter((item) => item.category === 'Lunch')
+// const Breakfast  = meals.filter((item) => item.category === 'Breakfast')
   return (
     <div className="mt-12">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-auto md:w-[90%] lg:w-[70%] gap-12">
