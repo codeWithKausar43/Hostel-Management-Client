@@ -14,6 +14,8 @@ import AddMeal from "../Page/Dashboard/AddMeal/AddMeal";
 import AllMeals from "../Page/Dashboard/AllMeals/AllMeals";
 import UPdateMeal from "../Page/Dashboard/UpdateMeal/UPdateMeal";
 import UpcomingMeals from "../Page/UpcomingMeals";
+import { GiMeal } from "react-icons/gi";
+import MealDetails from "../Page/MealDetails";
  
 
 const router = createBrowserRouter([
@@ -33,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/upcomingMeals",
         element:<UpcomingMeals></UpcomingMeals>
+      },
+      {
+        path:"/meal/:id",
+        element:<MealDetails></MealDetails>
       },
       {
         path: "/login",
