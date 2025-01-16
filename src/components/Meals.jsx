@@ -1,8 +1,7 @@
 import useMeals from "../hooks/useMeals";
 import MealCard from "./MealCard";
 
- 
- 
+
  const Meals = () => {
  const [meals,loading] = useMeals()
  if(loading){
@@ -22,6 +21,7 @@ import MealCard from "./MealCard";
     </div>
     </div>
   );
- };
+ }
  
  export default Meals;
+ 

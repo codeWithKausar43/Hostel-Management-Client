@@ -6,18 +6,72 @@ import DatePicker from "react-datepicker";
 import { Helmet } from "react-helmet";
 import { BiSolidLike } from "react-icons/bi";
 import { FaStarOfDavid } from "react-icons/fa";
+import useAuth from "../hooks/useAuth";
+import useAxiosOpen from "../hooks/useAxiosOpen";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 const MealDetails = () => {
+  const { user } = useAuth();
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
+  const axiosOpen = useAxiosOpen();
   const [meal, setMeal] = useState({});
+  const [review, setReview] = useState("");
   const [rating, setRating] = useState(0);
   const [startDate, setStartDate] = useState(new Date());
-  console.log(meal);
   useEffect(() => {
     axiosSecure.get(`/meals/${id}`).then((res) => {
       setMeal(res.data);
     });
   }, []);
+
+
+  // review specific meal 
+  const { data: reviews = [], refetch } = useQuery({
+    queryKey: ["reviews"],
+    queryFn: async () => {
+      const res = await axiosOpen.get(`/reviews/${id}`);
+      return res.data;
+    },
+  });
+
+  // review handle
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const deadline = form.deadline.value;
+    const title = form.title.value;
+    const review = form.review.value;
+    const reviewInfo = {
+      deadline,
+      review,
+      title,
+      user: {
+        name: user?.displayName,
+        email: user?.email,
+        photoUrl: user?.photoURL,
+      },
+      rating,
+      meal_id: meal._id,
+    };
+    try {
+      await axiosOpen.post("/review", reviewInfo).then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
+            title: "Review Successful",
+            icon: "success",
+            timer: 1500,
+          });
+          refetch()
+        }
+      });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+
   return (
     <>
       <Helmet>
@@ -37,26 +91,34 @@ const MealDetails = () => {
                 </p>
                 <div>
                   <p className="mb-2 text-xl">{meal.title}</p>
+                  <p className="mb-2 text-xl">{meal.name}</p>
                   <p className="mb-2 text-xl">{meal.email}</p>
                 </div>
               </div>
               <p className="text-md mt-32 md:mt-0 ml-2 md:ml-0">
-               {meal.deadline}
+                {meal.deadline}
               </p>
             </div>
             <div className="divider"></div>
             <div className="grid md:grid-cols-4  grid-cols-2 mb-2 text-2xl">
               <p className="text-lg"> {meal.category}</p>
               <p className="text-lg">${meal.price}</p>
-              <p className="text-lg flex items-center gap-1"><BiSolidLike />{meal.like}</p>
-              <p className="text-lg flex items-center gap-1"><FaStarOfDavid/>{meal.like}</p>
+              <p className="text-lg flex items-center gap-1">
+                <BiSolidLike />
+                {meal.like}
+              </p>
+              <p className="text-lg flex items-center gap-1">
+                <FaStarOfDavid />
+                {meal.like}
+              </p>
             </div>
+            <p>{meal.ingredients}</p>
             <p>{meal.description}</p>
           </div>
 
           <div className="">
             <h3 className="mb-8 text-xl ">Review : </h3>
-            <form>
+            <form onSubmit={handleReviewSubmit}>
               {/* Date Picker Input Field */}
               <div className="flex flex-col md:flex-row  justify-between ">
                 <div>
@@ -68,7 +130,7 @@ const MealDetails = () => {
                     onChange={(date) => setStartDate(date)}
                   />
                 </div>
-                <div>
+                <div className="text-left">
                   <label className="text-gray-700">Rating :</label>
                   <Rating
                     style={{ maxWidth: 180 }}
@@ -81,13 +143,14 @@ const MealDetails = () => {
               <div className="md:flex justify-between">
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text">Service Title :</span>
+                    <span className="label-text"> Title :</span>
                   </label>
                   <input
                     type="text"
                     name="title"
                     placeholder="service title"
-                    // defaultValue={title}
+                    defaultValue={meal.title}
+                    readOnly
                     className="input input-bordered"
                     required
                   />
@@ -100,7 +163,8 @@ const MealDetails = () => {
                     type="email"
                     name="email"
                     placeholder="user email"
-                    // defaultValue={user?.email}
+                    defaultValue={user?.email}
+                    readOnly
                     className="input input-bordered"
                     required
                   />
@@ -123,25 +187,25 @@ const MealDetails = () => {
             </form>
           </div>
         </div>
-        <div>
-          {/* <div className="mt-12">
+        <div className="mx-auto md:w-[90%] lg:w-[70%]">
+          <div className="mt-12">
             <h3 className="text-2xl font-semibold">Reviews:</h3>
             <p className="mt-2  text-lg">
               <span className="size-2 px-2 py-1 rounded-full  bg-orange-200 mr-2">
-                {review.length}
+                {reviews.length}
               </span>
-              Reviews For This Service
+              Reviews For This Meal
             </p>
-            {review.length > 0 &&
-              review.map((r, i) => (
+            {reviews.length > 0 &&
+              reviews.map((r, i) => (
                 <div
                   key={i}
                   className="mt-5 border-y-2 py-6 flex gap-6 items-center"
                 >
                   <div>
                     <img
-                      className="size-24 rounded-full"
-                      src={r?.user?.user_photoURL}
+                      className="size-24 rounded-full object-cover"
+                      src={r?.user?.photoUrl}
                       alt=""
                     />
                   </div>
@@ -155,7 +219,7 @@ const MealDetails = () => {
                   </div>
                 </div>
               ))}
-          </div> */}
+          </div>
         </div>
       </div>
     </>
