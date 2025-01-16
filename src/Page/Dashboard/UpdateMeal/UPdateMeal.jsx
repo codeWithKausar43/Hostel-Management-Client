@@ -41,7 +41,6 @@ const UpdateMeal = () => {
     formState: { errors },
     clearErrors,
     reset,
-    setValue,
   } = useForm();
 
   // Specific id get request
@@ -124,6 +123,7 @@ const UpdateMeal = () => {
             icon: "success",
             timer: 1500,
           });
+          navigate("/dashboard/allMeals")
         }
       })
       .catch((error) => {

@@ -13,6 +13,7 @@ import Meals from "../components/Meals";
 import AddMeal from "../Page/Dashboard/AddMeal/AddMeal";
 import AllMeals from "../Page/Dashboard/AllMeals/AllMeals";
 import UPdateMeal from "../Page/Dashboard/UpdateMeal/UPdateMeal";
+import UpcomingMeals from "../Page/UpcomingMeals";
  
 
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/meals",
         element: <Meals></Meals>,
+      },
+      {
+        path: "/upcomingMeals",
+        element:<UpcomingMeals></UpcomingMeals>
       },
       {
         path: "/login",
