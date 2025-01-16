@@ -12,6 +12,7 @@ import AllUser from "../Page/Dashboard/AllUser/AllUser";
 import Meals from "../components/Meals";
 import AddMeal from "../Page/Dashboard/AddMeal/AddMeal";
 import AllMeals from "../Page/Dashboard/AllMeals/AllMeals";
+import UPdateMeal from "../Page/Dashboard/UpdateMeal/UPdateMeal";
  
 
 const router = createBrowserRouter([
@@ -67,7 +68,11 @@ const router = createBrowserRouter([
       {
         path:"/dashboard/allMeals",
         element:<AllMeals></AllMeals>
-      }
+      },
+      {
+        path:"/dashboard/updateMeal/:id",
+        element:<UPdateMeal></UPdateMeal>
+      },
     ]
   }
 ]);
