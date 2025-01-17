@@ -42,7 +42,7 @@ const Dashboard = () => {
             <div className="my-12">
               <li>
                 <NavLink to="/dashboard/adminProfile" className="mb-2">
-                  <GrUserAdmin /> Admin Profile{" "}
+                  <GrUserAdmin /> Admin Profile
                 </NavLink>
               </li>
               <li>
@@ -61,7 +61,7 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/allReviews" className="mb-2">
+                <NavLink to="/dashboard/allReview" className="mb-2">
                   <MdRateReview /> All Reviews
                 </NavLink>
               </li>
@@ -81,9 +81,8 @@ const Dashboard = () => {
           ) : (
             <div className="my-12 text-md">
               <li>
-                <NavLink to="/dashboard" className="mb-2">
-                  <ImProfile />
-                  My Profile
+                <NavLink to="/dashboard/adminProfile" className="mb-2">
+                  <GrUserAdmin />My Profile
                 </NavLink>
               </li>
               <li>

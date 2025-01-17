@@ -16,6 +16,7 @@ import UPdateMeal from "../Page/Dashboard/UpdateMeal/UPdateMeal";
 import UpcomingMeals from "../Page/UpcomingMeals";
 import { GiMeal } from "react-icons/gi";
 import MealDetails from "../Page/MealDetails";
+import AllReview from "../Page/Dashboard/AllReview/AllReview";
  
 
 const router = createBrowserRouter([
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
       {
         path:"/dashboard/updateMeal/:id",
         element:<UPdateMeal></UPdateMeal>
+      },
+      {
+        path:"/dashboard/allReview",
+        element:<AllReview></AllReview>
       },
     ]
   }

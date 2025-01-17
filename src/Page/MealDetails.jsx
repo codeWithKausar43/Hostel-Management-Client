@@ -47,6 +47,7 @@ const MealDetails = () => {
       deadline,
       review,
       title,
+      like:0,
       user: {
         name: user?.displayName,
         email: user?.email,

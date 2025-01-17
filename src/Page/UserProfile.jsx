@@ -24,7 +24,7 @@ const UserProfile = () => {
 
       <div className="flex justify-center w-[80%] mx-auto  md:-mt-40 -mt-28 ">
         <img
-          className="md:w-[200px] md:h-[200px] w-[100px] h-[100px] rounded-full z-10 transition-shadow duration-300
+          className="md:w-[200px] object-cover md:h-[200px] w-[100px] h-[100px] rounded-full z-10 transition-shadow duration-300
       transform hover:scale-105 hover:translate-y-[-8px] border-8 shadow-lg border-white"
           src={user?.photoURL}
           alt="Album"
