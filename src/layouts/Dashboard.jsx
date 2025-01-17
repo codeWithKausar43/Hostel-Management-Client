@@ -12,6 +12,7 @@ import {
   MdHome,
   MdManageAccounts,
   MdNoMeals,
+  MdOutlineCardMembership,
   MdOutlineRateReview,
   MdRateReview,
   MdRestaurantMenu,
@@ -76,6 +77,19 @@ const Dashboard = () => {
                   Upcoming Meals
                 </NavLink>
               </li>
+              <li>
+                <NavLink to="/dashboard/addMembership" className="mb-2">
+                <MdOutlineCardMembership />
+                  Add Membership
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/membershipCard" className="mb-2">
+                  <FaCalendarAlt />
+                  Membership Card
+                </NavLink>
+              </li>
+              
               <div className="divider"></div>
             </div>
           ) : (

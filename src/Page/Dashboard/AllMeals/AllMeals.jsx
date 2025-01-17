@@ -94,7 +94,7 @@ const AllMeals = () => {
                       <div>
                         <div className="font-bold">{meal.title}</div>
                         <div className="text-sm opacity-50 flex gap-2 items-center">
-                          <AiFillLike /> {meal.like} <IoEye /> {meal.review}
+                          <AiFillLike /> {meal?.like?.like_count} <IoEye /> {meal.review}
                         </div>
                       </div>
                     </div>

@@ -72,13 +72,15 @@ const AddMeal = () => {
       name: data?.name,
       email: data?.email,
       category: data?.category,
-      price: data?.price,
+      price: parseInt(data?.price),
       ingredients: data?.ingredients,
       title: data?.title,
       deadline: data?.deadline,
       description: data?.description,
       photoUrl: imageUrl,
-      like: 0,
+      like:{
+        like_count:0
+      },
       review: 0,
       rating:0
     };

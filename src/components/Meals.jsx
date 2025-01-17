@@ -8,7 +8,7 @@ const Meals = () => {
   const axiosOpen = useAxiosOpen();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 1000]); // [minPrice, maxPrice]
+  const [priceRange, setPriceRange] = useState([]); // [minPrice, maxPrice]
 
   // Fetch meals dynamically based on filters
   const {
@@ -25,15 +25,8 @@ const Meals = () => {
     },
   
   });
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Failed to load meals. Please try again later.</div>;
-  }
-
+console.log(meals)
+  
   return (
     <div className="mt-12 mx-auto md:w-[90%] lg:w-[70%]">
       <div className="flex flex-wrap gap-6 justify-between">
@@ -45,9 +38,10 @@ const Meals = () => {
           <select
             onChange={(e) => setFilter(e.target.value)}
             className="select select-bordered w-full max-w-xs"
+            value={filter}
           >
   
-            <option value="">Select Service Category</option>
+            <option value="">Select  Category</option>
             <option value="Breakfast">Breakfast</option>
             <option value="Lunch">Lunch</option>
             <option value="Dinner">Dinner</option>
@@ -98,11 +92,13 @@ const Meals = () => {
       </div>
 
       {/* Meals Display */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-8">
+      {
+        isLoading ? <div className="min-h-14">loadin..</div>:<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-8">
         {meals.map((meal) => (
           <MealCard key={meal._id} item={meal} />
         ))}
       </div>
+      }
     </div>
   );
 };

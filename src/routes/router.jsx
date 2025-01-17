@@ -17,6 +17,10 @@ import UpcomingMeals from "../Page/UpcomingMeals";
 import { GiMeal } from "react-icons/gi";
 import MealDetails from "../Page/MealDetails";
 import AllReview from "../Page/Dashboard/AllReview/AllReview";
+import Membership from "../Page/Membership";
+import AddMembershipCard from "../Page/Dashboard/Membership/AddMembershipCard";
+import UpdateMembershipCard from "../Page/Dashboard/Membership/UpdateMembershipCard";
+import MembershipCard from "../Page/Dashboard/Membership/MembershipCard";
  
 
 const router = createBrowserRouter([
@@ -89,6 +93,19 @@ const router = createBrowserRouter([
         path:"/dashboard/allReview",
         element:<AllReview></AllReview>
       },
+      {
+        path:"/dashboard/addMembership",
+        element:<AddMembershipCard></AddMembershipCard>
+      },
+      {
+        path:"/dashboard/membershipCard",
+        element:<MembershipCard></MembershipCard>
+      },
+      {
+        path:"/dashboard/membershipCardUpdate/:id",
+        element:<UpdateMembershipCard></UpdateMembershipCard>
+      },
+       
     ]
   }
 ]);

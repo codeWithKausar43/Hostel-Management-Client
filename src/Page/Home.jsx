@@ -1,6 +1,7 @@
 import AllMeals from "../components/AllMeals";
 import Banner from "../components/Banner";
 import SectionTitle from "../hooks/Sectiontitle";
+import Membership from "./Membership";
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
           }
         ></SectionTitle>
         <AllMeals></AllMeals>
+        <Membership></Membership>
       </div>
     </div>
   );

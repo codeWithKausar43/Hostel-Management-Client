@@ -47,7 +47,9 @@ const MealDetails = () => {
       deadline,
       review,
       title,
-      like:0,
+      like:{
+        like_count:0
+      },
       user: {
         name: user?.displayName,
         email: user?.email,
@@ -72,6 +74,11 @@ const MealDetails = () => {
     }
   };
 
+  // like meal 
+  // const handleLikeMeal =(id) => {
+  //   console.log(id)
+  //   email: 
+  // }
 
   return (
     <>
@@ -104,20 +111,20 @@ const MealDetails = () => {
             <div className="grid md:grid-cols-4  grid-cols-2 mb-2 text-2xl">
               <p className="text-lg"> {meal.category}</p>
               <p className="text-lg">${meal.price}</p>
-              <p className="text-lg flex items-center gap-1">
+              <p onClick={() => handleLikeMeal(meal._id)}  className="text-lg flex items-center gap-1">
                 <BiSolidLike />
-                {meal.like}
+                {meal.like?.like_count}
               </p>
-              <p className="text-lg flex items-center gap-1">
+              <p  className="text-lg flex items-center gap-1">
                 <FaStarOfDavid />
-                {meal.like}
+                {meal.rating}
               </p>
             </div>
             <p>{meal.ingredients}</p>
             <p>{meal.description}</p>
           </div>
 
-          <div className="">
+          <div>
             <h3 className="mb-8 text-xl ">Review : </h3>
             <form onSubmit={handleReviewSubmit}>
               {/* Date Picker Input Field */}

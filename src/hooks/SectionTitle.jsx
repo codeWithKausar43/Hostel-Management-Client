@@ -14,7 +14,7 @@ const SectionTitle = ({ heading, description }) => {
   }, []);
 
   return (
-    <section className="meals-by-category py-8">
+    <section className="meals-by-category py-8 mt-16">
       <div className="container mx-auto text-center">
         {/* Heading */}
         <h2

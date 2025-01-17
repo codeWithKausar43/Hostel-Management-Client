@@ -78,7 +78,7 @@ const AllReview = () => {
                       <div>
                         <div className="font-bold">{review.title}</div>
                         <div className="text-sm opacity-50 flex gap-2 items-center">
-                          {review.review} <AiFillLike /> {review.like}
+                          {review.review} <AiFillLike /> {review?.like?.like_count}
                         </div>
                       </div>
                     </div>
