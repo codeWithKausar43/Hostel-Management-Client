@@ -9,7 +9,7 @@ const AllMeals = () => {
   const [tabIndex, setTabIndex] = useState(0);
  
   if (loading) {
-    return <p>Loading...</p>;
+    return <span className="loading loading-bars loading-md flex mx-auto items-center md:mt-60"></span>;
   }
 
   // Categorize meals

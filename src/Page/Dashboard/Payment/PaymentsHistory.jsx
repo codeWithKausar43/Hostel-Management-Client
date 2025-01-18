@@ -13,18 +13,11 @@ const PaymentsHistory = () => {
       return res.data;
     },
   });
+  
   return (
     <div>
       <h2>Your Payment History</h2>
-      {/* <ul>
-          {paymentHistory.map((payment, index) => (
-            <li key={index}>
-              <p>Amount: ${payment.price}</p>
-              <p>Date: {new Date(payment.date).toLocaleDateString()}</p>
-              <p>Status: {payment.badge}</p>
-            </li>
-          ))}
-        </ul> */}
+      
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}

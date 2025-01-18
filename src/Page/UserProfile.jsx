@@ -1,13 +1,24 @@
-  
 import { Helmet } from "react-helmet";
 import { useContext, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import DatePicker from "react-datepicker";
-import Profile from '../assets/profile.png'
+import Profile from "../assets/profile.png";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { SlBadge } from "react-icons/sl";
 
 const UserProfile = () => {
-  const { user } =  useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const [startDate, setStartDate] = useState(new Date());
+  const axiosSecure = useAxiosSecure();
+  const { data: userProfile = [] } = useQuery({
+    queryKey: ["myProfile"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/user/${user.email}`);
+      return res.data;
+    },
+  });
+  console.log(userProfile);
   return (
     <div>
       <div className="w-[80%] mx-auto backdrop-blur-xl">
@@ -44,17 +55,22 @@ const UserProfile = () => {
       >
         <div className="card-body">
           <p className="text-left z-20 w-[40%] "></p>
-          <h3 className=" md:text-3xl mt-4 md:mt-20 font-bold">Welcome</h3>
-          <h2 className="font-semibold text-2xl md:text-3xl">
+          
+          <h2 className="font-semibold text-xl md:mt-20">
             {user?.displayName}
           </h2>
+          <p className="text-xl flex justify-center items-center gap-2"> <SlBadge />{userProfile?.badge}</p>
           <p className="font-medium md:mt-3">Email: {user?.email}</p>
           <div className="text-center md:mt-4">
             <button className="md:border py-2 md:px-6  rounded-xl">
-            <div className="flex  gap-4 text-center justify-center items-center">
-            <p>Date : </p>
-            <DatePicker readOnly selected={startDate} onChange={(date) => setStartDate(date)} />
-            </div>
+              <div className="flex  gap-4 text-center justify-center items-center">
+                <p>Date : </p>
+                <DatePicker
+                  readOnly
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                />
+              </div>
             </button>
           </div>
         </div>

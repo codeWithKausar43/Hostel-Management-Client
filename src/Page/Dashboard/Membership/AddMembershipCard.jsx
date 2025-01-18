@@ -27,7 +27,7 @@ const AddMembershipCard = () => {
   };
 
   return (
-    <div>
+    <div className="w-full flex justify-center">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
         <form onSubmit={handleMembership} className="card-body">
           <div className="form-control">

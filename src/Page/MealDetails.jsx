@@ -17,7 +17,7 @@ const MealDetails = () => {
   const axiosSecure = useAxiosSecure();
   const axiosOpen = useAxiosOpen();
   const [meal, setMeal] = useState({});
-  const [review, setReview] = useState("");
+  // const [review, setReview] = useState("");
   const [rating, setRating] = useState(0);
   const [startDate, setStartDate] = useState(new Date());
   useEffect(() => {
@@ -25,17 +25,17 @@ const MealDetails = () => {
       setMeal(res.data);
     });
   }, []);
-
+ 
 
   // review specific meal 
   const { data: reviews = [], refetch } = useQuery({
-    queryKey: ["reviews"],
+    queryKey: ["reviewById"],
     queryFn: async () => {
-      const res = await axiosOpen.get(`/reviews/${id}`);
+      const res = await axiosOpen.get(`/reviewById/${id}`);
       return res.data;
     },
   });
-
+ 
   // review handle
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +47,7 @@ const MealDetails = () => {
       deadline,
       review,
       title,
+      meal_photoUrl:meal.photoUrl,
       like:{
         like_count:0
       },

@@ -25,15 +25,11 @@ const Dashboard = () => {
   const [isAdmin, isAdminLoading] = useAdmin();
 
   if (isAdminLoading) {
-    return <div>Loading...</div>; // Show loading indicator
+    return (
+      <span className="loading loading-bars loading-md flex mx-auto items-center md:mt-60"></span>
+    );
   }
 
-  if (isAdmin) {
-    console.log("User is an admin");
-  } else {
-    console.log("User is not an admin");
-  }
- 
   return (
     <div className="flex mx-auto md:w-[70%]">
       {/*  dashboard side bar*/}
@@ -79,7 +75,7 @@ const Dashboard = () => {
               </li>
               <li>
                 <NavLink to="/dashboard/addMembership" className="mb-2">
-                <MdOutlineCardMembership />
+                  <MdOutlineCardMembership />
                   Add Membership
                 </NavLink>
               </li>
@@ -89,14 +85,15 @@ const Dashboard = () => {
                   Membership Card
                 </NavLink>
               </li>
-              
+
               <div className="divider"></div>
             </div>
           ) : (
             <div className="my-12 text-md">
               <li>
                 <NavLink to="/dashboard/adminProfile" className="mb-2">
-                  <GrUserAdmin />My Profile
+                  <GrUserAdmin />
+                  My Profile
                 </NavLink>
               </li>
               <li>
@@ -105,7 +102,7 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/myReviews" className="mb-2">
+                <NavLink to="/dashboard/userAllReview" className="mb-2">
                   <MdOutlineRateReview /> My Reviews
                 </NavLink>
               </li>

@@ -15,7 +15,7 @@ const useAdmin = () => {
         return res.data?.admin;
       },
       onError: (error) => {
-        console.error("Error fetching admin status:", error);
+        // console.error("Error fetching admin status:", error);
       },
     });
   

@@ -23,6 +23,7 @@ import UpdateMembershipCard from "../Page/Dashboard/Membership/UpdateMembershipC
 import MembershipCard from "../Page/Dashboard/Membership/MembershipCard";
 import Checkout from "../Page/Checkout";
 import PaymentsHistory from "../Page/Dashboard/Payment/PaymentsHistory";
+import AllReviews from "../Page/Dashboard/AllReviews/AllReviews";
  
 
 const router = createBrowserRouter([
@@ -102,6 +103,10 @@ const router = createBrowserRouter([
       {
         path:"/dashboard/allReview",
         element:<AllReview></AllReview>
+      },
+      {
+        path:"/dashboard/userAllReview",
+        element:<AllReviews></AllReviews>
       },
       {
         path:"/dashboard/addMembership",

@@ -25,7 +25,7 @@ const Meals = () => {
     },
   
   });
-console.log(meals)
+ 
   
   return (
     <div className="mt-12 mx-auto md:w-[90%] lg:w-[70%]">

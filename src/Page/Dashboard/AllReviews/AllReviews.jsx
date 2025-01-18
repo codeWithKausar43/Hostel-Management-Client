@@ -1,23 +1,29 @@
-import React, { useEffect } from "react";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { AiFillLike } from "react-icons/ai";
-import { IoEye } from "react-icons/io5";
-
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { RiDeleteBack2Fill } from "react-icons/ri";
+import { IoEye } from "react-icons/io5";
+import { AiFillLike } from "react-icons/ai";
 import Swal from "sweetalert2";
-
-const AllReview = () => {
+import review from "../../../assets/review.jpg"
+import { MdSystemUpdateAlt } from "react-icons/md";
+const AllReviews = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: reviews = [], refetch } = useQuery({
-    queryKey: ["reviews"],
+  const { user } = useAuth();
+
+  const {
+    data: myallReviews = [],
+     refetch
+    
+  } = useQuery({
+    queryKey: ["myallReviews"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/reviews");
+      const res = await axiosSecure.get(`/reviews/${user?.email}`);
       return res.data;
     },
   });
-  console.log(reviews);
 
+  console.log(myallReviews);
   //   specific review delete
   const handleReviewDelete = (id) => {
     console.log(id);
@@ -45,8 +51,13 @@ const AllReview = () => {
       }
     });
   };
+
   return (
+    <div>
+        
+      {myallReviews.length > 0 ? (
         <div className="overflow-x-auto">
+            <h3 className="text-2xl mb-2 font-bold">My Review : ( {myallReviews.length} )</h3>
           <table className="table">
             {/* head */}
             <thead>
@@ -59,7 +70,7 @@ const AllReview = () => {
             </thead>
             <tbody>
               {/* row 1 */}
-              {reviews.map((review, i) => (
+              {myallReviews.map((review, i) => (
                 <tr key={review._id}>
                   <th>{i + 1}</th>
                   <td>
@@ -67,7 +78,7 @@ const AllReview = () => {
                       <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
                           <img
-                            src={review.user.photoUrl}
+                            src={review.meal_photoUrl}
                             alt="Avatar Tailwind CSS Component"
                           />
                         </div>
@@ -75,7 +86,8 @@ const AllReview = () => {
                       <div>
                         <div className="font-bold">{review.title}</div>
                         <div className="text-sm opacity-50 flex gap-2 items-center">
-                          {review.review} <AiFillLike /> {review?.like?.like_count}
+                          {review.review} <AiFillLike />{" "}
+                          {review?.like?.like_count}
                         </div>
                       </div>
                     </div>
@@ -91,6 +103,12 @@ const AllReview = () => {
                         onClick={() => handleReviewDelete(review._id)}
                         className=" text-2xl bg-blue-400 p-3 btn hover:text-red-700 text-white rounded-xl"
                       >
+                        <MdSystemUpdateAlt/>
+                      </span>
+                      <span
+                        onClick={() => handleReviewDelete(review._id)}
+                        className=" text-2xl bg-blue-400 p-3 btn hover:text-red-700 text-white rounded-xl"
+                      >
                         <RiDeleteBack2Fill />
                       </span>
                     </div>
@@ -100,8 +118,13 @@ const AllReview = () => {
             </tbody>
           </table>
         </div>
-       
+      ) : (
+        <div className="w-full mx-auto justify-center flex md:py-40">
+            <img className="md:w-[300px]" src={review} alt="" />
+        </div>
+      )}
+    </div>
   );
 };
 
-export default AllReview;
+export default AllReviews;
