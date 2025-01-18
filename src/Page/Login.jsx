@@ -40,7 +40,7 @@ const Login = () => {
         name: result.user?.displayName,
         photoUrl: result.user?.photoURL,
         role: "user",
-        badge:' bronze'
+        badge:'bronze'
       };
       axiosOpen.post("/user", userInfo)
         .then((res) => {

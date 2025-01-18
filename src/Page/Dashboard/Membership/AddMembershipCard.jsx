@@ -7,7 +7,7 @@ const AddMembershipCard = () => {
   const handleMembership = (e) => {
     e.preventDefault();
     const category = e.target.category.value;
-    const price = e.target.price.value;
+    const price = parseInt(e.target.price.value);
     const membershipInfo = {
       category,
       price,

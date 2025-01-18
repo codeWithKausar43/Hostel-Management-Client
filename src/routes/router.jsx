@@ -21,6 +21,8 @@ import Membership from "../Page/Membership";
 import AddMembershipCard from "../Page/Dashboard/Membership/AddMembershipCard";
 import UpdateMembershipCard from "../Page/Dashboard/Membership/UpdateMembershipCard";
 import MembershipCard from "../Page/Dashboard/Membership/MembershipCard";
+import Checkout from "../Page/Checkout";
+import PaymentsHistory from "../Page/Dashboard/Payment/PaymentsHistory";
  
 
 const router = createBrowserRouter([
@@ -45,6 +47,10 @@ const router = createBrowserRouter([
         path:"/meal/:id",
         element:<MealDetails></MealDetails>
       },
+      {
+        path:"/checkout/:id",
+        element:<Checkout></Checkout>
+       },
       {
         path: "/login",
         element:<Login></Login>,
@@ -72,6 +78,10 @@ const router = createBrowserRouter([
       {
         path:"/dashboard/adminProfile",
         element:<UserProfile></UserProfile>
+      },
+      {
+        path:"/dashboard/paymentsHistory",
+        element:<PaymentsHistory></PaymentsHistory>
       },
       {
         path:"/dashboard/manageUsers",

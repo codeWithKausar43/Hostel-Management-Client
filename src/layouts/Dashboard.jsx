@@ -110,7 +110,7 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/myReviews" className="mb-2">
+                <NavLink to="/dashboard/paymentsHistory" className="mb-2">
                   <FaCcAmazonPay />
                   Payment History
                 </NavLink>
