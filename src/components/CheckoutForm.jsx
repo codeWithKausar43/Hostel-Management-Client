@@ -1,5 +1,3 @@
-
-
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
@@ -72,9 +70,8 @@ const CheckoutForm = ({ clientSecret }) => {
         axiosSecure
           .post("/payments", payment)
           .then((res) => {
-            // console.log("Payment saved to database:", res.data);
             setError("");
-            if (res.data?.insertedId) {
+            if (res.data.success) {
               Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -93,10 +90,6 @@ const CheckoutForm = ({ clientSecret }) => {
         setError("Unexpected payment intent status.");
       }
     } catch (confirmPaymentError) {
-      // console.log(
-      //   "Error confirming payment in catch block: ",
-      //   confirmPaymentError
-      // );
       setError("A processing error occurred. Please try again later.");
     }
   };

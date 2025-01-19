@@ -16,16 +16,17 @@ const MealDetails = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const axiosOpen = useAxiosOpen();
-  const [meal, setMeal] = useState({});
-  // const [review, setReview] = useState("");
+
   const [rating, setRating] = useState(0);
   const [startDate, setStartDate] = useState(new Date());
-  useEffect(() => {
-    axiosSecure.get(`/meals/${id}`).then((res) => {
-      setMeal(res.data);
-    });
-  }, []);
- 
+
+  const {data : meal = {}, refetch: reload} = useQuery({
+    queryKey:["mealById"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/meals/${id}`)
+      return res.data 
+    }
+  })
 
   // review specific meal 
   const { data: reviews = [], refetch } = useQuery({
@@ -68,6 +69,7 @@ const MealDetails = () => {
             timer: 1500,
           });
           refetch()
+          reload()
         }
       });
     } catch (error) {
