@@ -24,6 +24,7 @@ import MembershipCard from "../Page/Dashboard/Membership/MembershipCard";
 import Checkout from "../Page/Checkout";
 import PaymentsHistory from "../Page/Dashboard/Payment/PaymentsHistory";
 import AllReviews from "../Page/Dashboard/AllReviews/AllReviews";
+import MyRequest from "../Page/RequestPage/MyRequest";
  
 
 const router = createBrowserRouter([
@@ -103,6 +104,10 @@ const router = createBrowserRouter([
       {
         path:"/dashboard/allReview",
         element:<AllReview></AllReview>
+      },
+      {
+        path:"/dashboard/requestedMeals",
+        element:<MyRequest></MyRequest>
       },
       {
         path:"/dashboard/userAllReview",

@@ -20,15 +20,15 @@ const MealDetails = () => {
   const [rating, setRating] = useState(0);
   const [startDate, setStartDate] = useState(new Date());
 
-  const {data : meal = {}, refetch: reload} = useQuery({
-    queryKey:["mealById"],
+  const { data: meal = {}, refetch: reload } = useQuery({
+    queryKey: ["mealById"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/meals/${id}`)
-      return res.data 
-    }
-  })
+      const res = await axiosSecure.get(`/meals/${id}`);
+      return res.data;
+    },
+  });
 
-  // review specific meal 
+  // review specific meal
   const { data: reviews = [], refetch } = useQuery({
     queryKey: ["reviewById"],
     queryFn: async () => {
@@ -36,7 +36,7 @@ const MealDetails = () => {
       return res.data;
     },
   });
- 
+
   // review handle
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
@@ -48,9 +48,9 @@ const MealDetails = () => {
       deadline,
       review,
       title,
-      meal_photoUrl:meal.photoUrl,
-      like:{
-        like_count:0
+      meal_photoUrl: meal.photoUrl,
+      like: {
+        like_count: 0,
       },
       user: {
         name: user?.displayName,
@@ -68,8 +68,9 @@ const MealDetails = () => {
             icon: "success",
             timer: 1500,
           });
-          refetch()
-          reload()
+          refetch();
+          reload();
+          form.reset();
         }
       });
     } catch (error) {
@@ -77,12 +78,81 @@ const MealDetails = () => {
     }
   };
 
-  // like meal 
-  // const handleLikeMeal =(id) => {
-  //   console.log(id)
-  //   email: 
-  // }
+  // get user profile badge
+  const { data: userProfile = [] } = useQuery({
+    queryKey: ["myProfile"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/user/${user.email}`);
+      return res.data;
+    },
+  });
+  // like meal
+  const handleLikeMeal = async (id) => {
+    if (
+      userProfile?.badge === "Silver" ||
+      userProfile?.badge === "Gold" ||
+      userProfile?.badge === "Platinum"
+    ) {
+      try {
+        const res = await axiosSecure.patch(`/likeUpdate/${id}`, {
+          email: user?.email,
+        });
 
+        if (res.data.message === "You have already liked this meal.") {
+          Swal.fire({
+            icon: "info",
+            title: "Already Liked!",
+            text: "You can only like this meal once.",
+          });
+        } else {
+          Swal.fire({
+            icon: "success",
+            title: "Liked!",
+            text: "Your like has been added successfully.",
+          });
+          reload();
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: "Something went wrong while liking the meal. Please try again.",
+        });
+      }
+      return;
+    }
+    Swal.fire({
+      icon: "error",
+      title: "Error!",
+      text: "Please buy the package otherwise you can't like",
+    });
+  };
+
+  //  request meal 
+  const handleRequestMeal = (id) => {
+    console.log(id)
+    const requestInfo = {
+      requestMeal_id: id,
+      email: user?.email,
+      title: meal.title,
+      status: 'pending',
+      photoUrl: meal.photoUrl,
+      like: meal.like?.like_count,
+      review: meal.rating
+    }
+    console.table(requestInfo)
+    axiosSecure.post("/requestMeal", requestInfo)
+    .then(res => {
+     if(res.data.insertedId){
+      Swal.fire({
+        title: "Request Successful",
+        icon: "success",
+        timer: 1500,
+      });
+      }
+    })
+
+  }
   return (
     <>
       <Helmet>
@@ -114,19 +184,26 @@ const MealDetails = () => {
             <div className="grid md:grid-cols-4  grid-cols-2 mb-2 text-2xl">
               <p className="text-lg"> {meal.category}</p>
               <p className="text-lg">${meal.price}</p>
-              <p onClick={() => handleLikeMeal(meal._id)}  className="text-lg flex items-center gap-1">
+              <p
+                onClick={() => handleLikeMeal(meal._id)}
+                className="text-lg flex items-center gap-1 cursor-pointer"
+              >
                 <BiSolidLike />
                 {meal.like?.like_count}
               </p>
-              <p  className="text-lg flex items-center gap-1">
+              <p className="text-lg flex items-center gap-1">
                 <FaStarOfDavid />
                 {meal.rating}
               </p>
             </div>
             <p>{meal.ingredients}</p>
             <p>{meal.description}</p>
+            <p>
+              <button onClick={() => handleRequestMeal(meal._id)} className="btn mt-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105">
+              Request Meal
+              </button>
+            </p>
           </div>
-
           <div>
             <h3 className="mb-8 text-xl ">Review : </h3>
             <form onSubmit={handleReviewSubmit}>
@@ -191,7 +268,7 @@ const MealDetails = () => {
                 required
               ></textarea>
               <input
-                className="btn bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105"
+                className="btn mt-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105"
                 type="submit"
                 value="Add Review"
               />

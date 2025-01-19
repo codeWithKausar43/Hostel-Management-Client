@@ -18,7 +18,7 @@ const UserProfile = () => {
       return res.data;
     },
   });
-  console.log(userProfile);
+
   return (
     <div>
       <div className="w-[80%] mx-auto backdrop-blur-xl">
