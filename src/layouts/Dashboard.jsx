@@ -127,16 +127,7 @@ const Dashboard = () => {
               <MdHome></MdHome> Home
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/">
-              <FaSearch></FaSearch> Menu
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/">
-              <FaEnvelope></FaEnvelope>Contact
-            </NavLink>
-          </li>
+          
         </ul>
       </div>
       {/*  dashboard content*/}

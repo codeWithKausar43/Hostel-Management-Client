@@ -28,6 +28,7 @@ import MyRequest from "../Page/RequestPage/MyRequest";
 import AllRequest from "../Page/Dashboard/AllRequest/AllRequest";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
+import ServeMeals from "../Page/Dashboard/ServeMeals/ServeMeals";
  
 
 const router = createBrowserRouter([
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
       {
         path:"/dashboard/adminProfile",
         element:<UserProfile></UserProfile>
+      },
+      {
+        path:"/dashboard/serveMeals",
+        element:<PrivateRoute><AdminRoute><ServeMeals></ServeMeals></AdminRoute></PrivateRoute>
       },
       {
         path:"/dashboard/paymentsHistory",

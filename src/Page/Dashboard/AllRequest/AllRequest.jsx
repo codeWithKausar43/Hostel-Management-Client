@@ -7,9 +7,9 @@ import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 const AllRequest = () => {
-  const { user } = useAuth();
+  
   const axiosSecure = useAxiosSecure();
-  const { data: requestMeal = [] } = useQuery({
+  const { data: requestMeal = [], refetch } = useQuery({
     queryKey: ["request"],
     queryFn: async () => {
       const res = await axiosSecure.get("/requestMealAdmin");
@@ -17,10 +17,8 @@ const AllRequest = () => {
     },
   });
 
-  console.log(requestMeal);
   // status updata
-
-  const handleStatusUpdate = (id,email) => {
+  const handleStatusUpdate = (id, email) => {
     const requestInfo = {
       email: email,
       requestMeal_id: id,
@@ -30,7 +28,14 @@ const AllRequest = () => {
       .patch("/requestStatusUpdate", requestInfo)
       .then((res) => {
         if (res.data.success) {
-          alert("Status updated successfully!");
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Status updated successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          refetch()
         } else {
           alert(res.data.message);
         }
@@ -43,7 +48,8 @@ const AllRequest = () => {
 
   return (
     <div>
-      <div className="overflow-x-auto">
+      {
+       requestMeal.length > 0 ?<div className="overflow-x-auto">
         <table className="table">
           <thead>
             <tr>
@@ -87,7 +93,7 @@ const AllRequest = () => {
                     <button
                       className="bg-yellow-300 px-3 py-1 rounded-lg hover:bg-yellow-400"
                       onClick={() =>
-                        handleStatusUpdate(meal.requestMeal_id,meal.email)
+                        handleStatusUpdate(meal.requestMeal_id, meal.email)
                       }
                     >
                       Approve
@@ -105,7 +111,8 @@ const AllRequest = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div>: <div className="text-4xl text-red-400 flex justify-center items-center w-full">No Request</div>
+      }
     </div>
   );
 };

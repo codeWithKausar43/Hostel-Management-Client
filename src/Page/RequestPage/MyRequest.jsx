@@ -3,7 +3,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { AiFillLike } from "react-icons/ai";
 import { IoEye } from "react-icons/io5";
- 
+import noRequest from "../../assets/norequest.png"
 import { RiDeleteBack2Fill } from "react-icons/ri";
 import Swal from "sweetalert2";
 
@@ -18,11 +18,10 @@ const MyRequest = () => {
     },
   });
 
-
   // request delete
   const handleRequestDelete = (id) => {
-    console.log(id)
-    
+    console.log(id);
+
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -30,25 +29,22 @@ const MyRequest = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/requestDeleteBId/${id}`)
-      .then(res => {
-      if(res.data.deletedCount){
-         Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success"
+        axiosSecure.delete(`/requestDeleteBId/${id}`).then((res) => {
+          if (res.data.deletedCount) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+            refetch();
+          }
         });
-        refetch()
-      }
-    })
-       
       }
     });
-
-  }
+  };
 
   return (
     <div>
@@ -81,25 +77,33 @@ const MyRequest = () => {
                         <div>
                           <div className="font-bold">{requestMeal.title}</div>
                           <div className="text-sm opacity-50 flex gap-2 items-center">
-                          <IoEye/> {requestMeal.review}
-                            <AiFillLike />{requestMeal?.like}
+                            <IoEye /> {requestMeal.review}
+                            <AiFillLike />
+                            {requestMeal?.like}
                           </div>
                         </div>
                       </div>
                     </td>
                     <td>
-                      <div className="flex gap-3">
-                         {requestMeal.status}
-                      </div>
+                      <div className="flex gap-3">{requestMeal.status}</div>
                     </td>
                     <td>
                       <div className="flex gap-3">
-                        <span
+                        {requestMeal.status === "approved" ? (
+                          <span
+                             
+                            className="text-2xl cursor-not-allowed  p-3 btn hover:text-red-700 text-white rounded-xl"
+                          >
+                            <RiDeleteBack2Fill />
+                          </span>
+                        ) : (
+                          <span
                             onClick={() => handleRequestDelete(requestMeal._id)}
-                          className="text-2xl bg-blue-400 p-3 btn hover:text-red-700 text-white rounded-xl"
-                        >
-                          <RiDeleteBack2Fill />
-                        </span>
+                            className="text-2xl bg-blue-400 p-3 btn hover:text-red-700 text-white rounded-xl"
+                          >
+                            <RiDeleteBack2Fill />
+                          </span>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -110,7 +114,7 @@ const MyRequest = () => {
         </div>
       ) : (
         <div className="w-full mx-auto justify-center flex md:py-40">
-          {/* <img className="md:w-[300px]" src={review} alt="" /> */}
+          <img className="md:w-[300px]" src={noRequest} alt="" />
         </div>
       )}
     </div>
