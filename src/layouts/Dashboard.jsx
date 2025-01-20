@@ -17,7 +17,7 @@ import {
   MdRateReview,
   MdRestaurantMenu,
 } from "react-icons/md";
-import { RiMapPinAddFill } from "react-icons/ri";
+import { RiGitPullRequestFill, RiMapPinAddFill } from "react-icons/ri";
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 
@@ -60,6 +60,11 @@ const Dashboard = () => {
               <li>
                 <NavLink to="/dashboard/allReview" className="mb-2">
                   <MdRateReview /> All Reviews
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/allRequest" className="mb-2">
+                <RiGitPullRequestFill /> All Request
                 </NavLink>
               </li>
               <li>

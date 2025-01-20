@@ -25,6 +25,9 @@ import Checkout from "../Page/Checkout";
 import PaymentsHistory from "../Page/Dashboard/Payment/PaymentsHistory";
 import AllReviews from "../Page/Dashboard/AllReviews/AllReviews";
 import MyRequest from "../Page/RequestPage/MyRequest";
+import AllRequest from "../Page/Dashboard/AllRequest/AllRequest";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
  
 
 const router = createBrowserRouter([
@@ -47,7 +50,7 @@ const router = createBrowserRouter([
       },
       {
         path:"/meal/:id",
-        element:<MealDetails></MealDetails>
+        element:<PrivateRoute><MealDetails></MealDetails></PrivateRoute>
       },
       {
         path:"/checkout/:id",
@@ -104,6 +107,10 @@ const router = createBrowserRouter([
       {
         path:"/dashboard/allReview",
         element:<AllReview></AllReview>
+      },
+      {
+        path:"/dashboard/allRequest",
+        element:<AllRequest></AllRequest>
       },
       {
         path:"/dashboard/requestedMeals",

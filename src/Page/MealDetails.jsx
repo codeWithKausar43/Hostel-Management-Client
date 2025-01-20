@@ -128,31 +128,49 @@ const MealDetails = () => {
     });
   };
 
-  //  request meal 
+ 
+
   const handleRequestMeal = (id) => {
-    console.log(id)
     const requestInfo = {
       requestMeal_id: id,
       email: user?.email,
       title: meal.title,
-      status: 'pending',
+      status: "pending",
       photoUrl: meal.photoUrl,
       like: meal.like?.like_count,
-      review: meal.rating
-    }
-    console.table(requestInfo)
-    axiosSecure.post("/requestMeal", requestInfo)
-    .then(res => {
-     if(res.data.insertedId){
-      Swal.fire({
-        title: "Request Successful",
-        icon: "success",
-        timer: 1500,
+      review: meal.rating,
+    };
+    axiosSecure
+      .post("/requestMeal", requestInfo)
+      .then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
+            title: "Request Successful",
+            icon: "success",
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        // Handle Backend Errors
+        if (error.response && error.response.status === 400) {
+          Swal.fire({
+            title: "There is already a request",
+            text: "This meal has already been requested by you.",
+            icon: "warning",
+            timer: 1500,
+          });
+        } else {
+          Swal.fire({
+            title: "Request Failed",
+            text: "Something went wrong. Please try again later.",
+            icon: "error",
+            timer: 1500,
+          });
+        }
       });
-      }
-    })
+  };
 
-  }
   return (
     <>
       <Helmet>
@@ -199,8 +217,11 @@ const MealDetails = () => {
             <p>{meal.ingredients}</p>
             <p>{meal.description}</p>
             <p>
-              <button onClick={() => handleRequestMeal(meal._id)} className="btn mt-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105">
-              Request Meal
+              <button
+                onClick={() => handleRequestMeal(meal._id)}
+                className="btn mt-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105"
+              >
+                Request Meal
               </button>
             </p>
           </div>
