@@ -3,10 +3,11 @@ import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const CheckoutForm = ({ clientSecret }) => {
+  const navigate = useNavigate()
   const [error, setError] = useState("");
   const { id } = useParams();
   const [transactionId, setTransactionId] = useState("");
@@ -78,6 +79,7 @@ const CheckoutForm = ({ clientSecret }) => {
                 title: "Thank you for the payment",
                 timer: 1500,
               });
+              navigate("/")
             }
           })
           .catch((dbError) => {

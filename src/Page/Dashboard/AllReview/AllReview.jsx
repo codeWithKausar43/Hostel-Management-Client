@@ -6,6 +6,7 @@ import { IoEye } from "react-icons/io5";
 
 import { RiDeleteBack2Fill } from "react-icons/ri";
 import Swal from "sweetalert2";
+import { FaEye } from "react-icons/fa";
 
 const AllReview = () => {
   const axiosSecure = useAxiosSecure();
@@ -46,14 +47,17 @@ const AllReview = () => {
     });
   };
   return (
-        <div className="overflow-x-auto">
+      <div className="md:w-[90%] mx-auto mt-12">
+        {
+          reviews.length > 0 ? <div>
+            <h3 className="text-2xl font-bold text-black mb-2">All Reviews : ( {reviews.length})</h3>
+          <div className="overflow-x-auto">
           <table className="table">
             {/* head */}
             <thead>
               <tr>
                 <th>#</th>
                 <th>Title</th>
-
                 <th>Operation</th>
               </tr>
             </thead>
@@ -75,7 +79,7 @@ const AllReview = () => {
                       <div>
                         <div className="font-bold">{review.title}</div>
                         <div className="text-sm opacity-50 flex gap-2 items-center">
-                          {review.review} <AiFillLike /> {review?.like?.like_count}
+                          <AiFillLike /> {review?.like?.like_count} <FaEye /> {review?.like?.review_count}
                         </div>
                       </div>
                     </div>
@@ -100,6 +104,9 @@ const AllReview = () => {
             </tbody>
           </table>
         </div>
+          </div> : <p className="text-center font-bold text-4xl ">No Available Review</p>
+        }
+      </div>
        
   );
 };

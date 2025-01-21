@@ -30,14 +30,14 @@ const Checkout = () => {
         console.log(res.data.clientSecret);
         setClientSecret(res.data.clientSecret);
       })
-      .catch((err) => console.error("Error creating payment intent:", err));
+      .catch((err) => ( err));
   }, [axiosSecure, packagePrice]);
 
   const stripePromise = loadStripe(import.meta.env.VITE_Payment_gateway_PK);
 
   return (
     <div className="mx-auto flex justify-center md:w-[90%] lg:w-[70%] mt-16">
-      <div className="md:w-[500px] bg-gray-200 px-10 py-12 rounded-xl">
+      <div className="md:w-[500px] w-full bg-gray-200 px-10 py-12 rounded-xl">
         <div className="flex justify-between mb-12">
           <h3 className="text-xl text-black flex items-center gap-2 font-body">
             <SlBadge /> {checkout.category}

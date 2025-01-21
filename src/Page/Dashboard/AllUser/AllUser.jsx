@@ -54,7 +54,7 @@ const AllUser = () => {
     });
   };
   return (
-    <div>
+    <div className="md:mt-12 md:w-[90%] mx-auto">
       <div className="flex justify-between my-4">
         <h2 className="text-3xl">All Users</h2>
         <h2 className="text-3xl">Total Users {users.length}</h2>
@@ -67,7 +67,7 @@ const AllUser = () => {
             <tr>
               <th></th>
               <th>Name</th>
-              <th>Email</th>
+              <th className="md:flex hidden ">Email</th>
               <th>Role</th>
               <th>Action</th>
             </tr>
@@ -76,15 +76,15 @@ const AllUser = () => {
             {users.map((user, i) => (
               <tr key={user._id}>
                 <th> {i + 1}</th>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
+                <td >{user.name}</td>
+                <td className="hidden md:flex">{user.email}</td>
                 <td>
                   {user.role === "admin" ? (
                     "Admin"
                   ) : (
                     <button
                       onClick={() => handleMakeAdmin(user)}
-                      className="hover:text-red-500 btn-lg btn bg-orange-400 text-white"
+                      className="hover:text-red-500 text-xl md:btn-lg md:btn text-black md:bg-blue-400 md:text-white"
                     >
                       <FaUsers></FaUsers>
                     </button>
@@ -93,7 +93,7 @@ const AllUser = () => {
                 <td>
                   <button
                     onClick={() => handleDeleteUser(user)}
-                    className="hover:text-red-500 btn-lg btn"
+                    className="hover:text-red-500 md:btn-lg md:btn"
                   >
                     <FaTrashAlt></FaTrashAlt>
                   </button>

@@ -21,7 +21,7 @@ const UserProfile = () => {
 
   return (
     <div>
-      <div className="w-[80%] mx-auto backdrop-blur-xl">
+      <div className="w-[80%] mx-auto backdrop-blur-xl md:mt-12">
         <Helmet>
           <title>My Profile || Hostel Management</title>
         </Helmet>

@@ -1,5 +1,7 @@
 import AllMeals from "../components/AllMeals";
 import Banner from "../components/Banner";
+import FAQSection from "../components/FAQSection";
+import UpcomingMeals from "../components/UpcomingMeals";
 import SectionTitle from "../hooks/Sectiontitle";
 import Membership from "./Membership";
 
@@ -15,8 +17,11 @@ const Home = () => {
           }
         ></SectionTitle>
         <AllMeals></AllMeals>
-        <Membership></Membership>
+        
+       <FAQSection></FAQSection>
       </div>
+      <UpcomingMeals></UpcomingMeals>
+      <Membership></Membership>
     </div>
   );
 };

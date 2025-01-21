@@ -22,7 +22,7 @@ const ForwardedDatePicker = React.forwardRef(
 );
 
 const AddMeal = () => {
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [error, setError] = useState("");
   const [photoFile, setPhotoFile] = useState(null);
@@ -33,7 +33,7 @@ const AddMeal = () => {
     handleSubmit,
     formState: { errors },
     clearErrors,
-    reset
+    reset,
   } = useForm();
 
   const uploadImage = async (image) => {
@@ -78,30 +78,32 @@ const AddMeal = () => {
       deadline: data?.deadline,
       description: data?.description,
       photoUrl: imageUrl,
-      like:{
-        like_count:0
+      like: {
+        like_count: 0,
       },
       review: 0,
-      rating:0
+      rating: 0,
     };
     console.log(AddMealInfo);
-    axiosSecure.post("/meal", AddMealInfo).then(res => {
-    console.log(res.data)
-    if(res.data?.insertedId){
-      Swal.fire({
-        title:`${data.title} successful added to database`,
-        icon: "success",
-       timer: 1500
+    axiosSecure
+      .post("/meal", AddMealInfo)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data?.insertedId) {
+          Swal.fire({
+            title: `${data.title} successful added to database`,
+            icon: "success",
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: `${error.message}`,
+          icon: "error",
+          timer: 1500,
+        });
       });
-    }
-    }).catch((error) => {
-      Swal.fire({
-        title:`${error.message}`,
-        icon: "error",
-        timer: 1500
-      });
-    })
-     
   };
 
   // Image change handler with validation
@@ -139,132 +141,159 @@ const AddMeal = () => {
   };
 
   return (
-    <div className="bg-blue-gray-100 box-content lg:w-[800px] p-12 rounded-xl">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-1 gap-x-4 lg:grid-cols-2 justify-around">
-          {/* Title */}
-          <label className="form-control w-full">
-            <span className="label-text mb-2">Title</span>
-            <input
-              {...register("title", { required: "Title is required" })}
-              type="text"
-              className="input input-bordered w-full"
-            />
-            {errors.title && (
-              <span className="text-red-500">{errors.title.message}</span>
-            )}
-          </label>
-
-          {/* Category */}
-          <label className="form-control w-full">
-            <span className="label-text mb-2">Category</span>
-            <select
-              {...register("category", { required: "Category is required" })}
-              className="select select-bordered w-full"
-            >
-              <option defaultValue={'Select a category'}>
-                Select a category
-              </option>
-              <option>Breakfast</option>
-              <option>Lunch</option>
-              <option>Dinner</option>
-              <option>Upcoming</option>
-            </select>
-            {errors.category && (
-              <span className="text-red-500">{errors.category.message}</span>
-            )}
-          </label>
-
-          {/* Ingredients */}
-          <label className="form-control w-full">
-            <span className="label-text mb-2">Ingredients</span>
-            <input
-              {...register("ingredients", {
-                required: "Ingredients are required",
-              })}
-              type="text"
-              className="input input-bordered w-full"
-            />
-            {errors.ingredients && (
-              <span className="text-red-500">{errors.ingredients.message}</span>
-            )}
-          </label>
-
-          {/* Price */}
-          <label className="form-control w-full">
-            <span className="label-text mb-2">Price</span>
-            <input
-              {...register("price", { required: "Price is required" })}
-              type="number"
-              className="input input-bordered w-full"
-            />
-            {errors.price && (
-              <span className="text-red-500">{errors.price.message}</span>
-            )}
-          </label>
-
-          {/* Post Date (DatePicker) */}
-          <label className="form-control w-full">
-            <span className="label-text mb-2">Post Date</span>
-            <Controller
-              name="deadline"
-              control={control}
-              rules={{ required: "Deadline is required" }}
-              render={({ field }) => (
-                <ForwardedDatePicker
-                  {...field}
-                  className="border p-2 rounded-md w-full"
-                  selected={startDate}
-                  onChange={(date) => {
-                    setStartDate(date);
-                    const formattedDate = date.toLocaleDateString("en-US");
-                    field.onChange(formattedDate);
-                  }}
-                />
+    <div className="md:mt-12 w-full md:w-[90%] mx-auto">
+      <div className="bg-blue-gray-100 box-content p-12 rounded-xl">
+        <h3 className="mb-4 text-3xl font-bold text-center underline">
+          Add Meal
+        </h3>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-1 gap-x-4 md:grid-cols-2 justify-around">
+            {/* Title */}
+            <label className="form-control w-full">
+              <span className="label-text mb-2">Title</span>
+              <input
+                {...register("title", { required: "Title is required" })}
+                type="text"
+                className="input input-bordered w-full"
+              />
+              {errors.title && (
+                <span className="text-red-500">{errors.title.message}</span>
               )}
-            />
-            {errors.deadline && (
-              <span className="text-red-500">{errors.deadline.message}</span>
-            )}
-          </label>
-
-          {/* Name */}
-          <label className="form-control w-full">
-            <span className="label-text mb-2">Name</span>
-            <input
-              readOnly
-              defaultValue={user?.displayName}
-              {...register("name", { required: "Name is required" })}
-              type="text"
-              className="input input-bordered w-full"
-            />
-            {errors.name && (
-              <span className="text-red-500">{errors.name.message}</span>
-            )}
-          </label>
-
-          {/* Email */}
-          <label className="form-control w-full ">
-            <span className="label-text mb-2">Email</span>
-            <input
-              readOnly
-              defaultValue={user?.email}
-              {...register("email", { required: "Email is required" })}
-              type="text"
-              className="input input-bordered w-full"
-            />
-            {errors.email && (
-              <span className="text-red-500">{errors.email.message}</span>
-            )}
-          </label>
-
-          {/* Photo file upload */}
-          <div className="flex justify-left rounded-md gap-4 items-end">
-            <label htmlFor="photoFile" className="cursor-pointer">
-              <div className="flex items-center justify-center bg-white text-black py-3 px-4 rounded-lg shadow-md hover:bg-blue-200 transition-all duration-200">
-                <span>Upload Photo</span>
-              </div>
             </label>
+
+            {/* Category */}
+
+            <label className="form-control w-full">
+              <span className="label-text mb-2">Category</span>
+              <select
+                {...register("category", { required: "Category is required" })}
+                className="select select-bordered w-full"
+              >
+                <option defaultValue={"Select a category"}>
+                  Select a category
+                </option>
+                <option>Breakfast</option>
+                <option>Lunch</option>
+                <option>Dinner</option>
+                <option>Upcoming</option>
+              </select>
+              {errors.category && (
+                <span className="text-red-500">{errors.category.message}</span>
+              )}
+            </label>
+
+            {/* Ingredients */}
+
+            <label className="form-control w-full">
+              <span className="label-text mb-2">Ingredients</span>
+              <input
+                {...register("ingredients", {
+                  required: "Ingredients are required",
+                })}
+                type="text"
+                className="input input-bordered w-full"
+              />
+              {errors.ingredients && (
+                <span className="text-red-500">
+                  {errors.ingredients.message}
+                </span>
+              )}
+            </label>
+
+            {/* Price */}
+
+            <label className="form-control w-full">
+              <span className="label-text mb-2">Price</span>
+              <input
+                {...register("price", { required: "Price is required" })}
+                type="number"
+                className="input input-bordered w-full"
+              />
+              {errors.price && (
+                <span className="text-red-500">{errors.price.message}</span>
+              )}
+            </label>
+
+            {/* Post Date (DatePicker) */}
+
+            <label className="form-control w-full">
+              <span className="label-text mb-2">Post Date</span>
+              <Controller
+                name="deadline"
+                control={control}
+                rules={{ required: "Deadline is required" }}
+                render={({ field }) => (
+                  <ForwardedDatePicker
+                    {...field}
+                    className="border p-2 rounded-md w-full"
+                    selected={startDate}
+                    onChange={(date) => {
+                      setStartDate(date);
+                      const formattedDate = date.toLocaleDateString("en-US");
+                      field.onChange(formattedDate);
+                    }}
+                  />
+                )}
+              />
+              {errors.deadline && (
+                <span className="text-red-500">{errors.deadline.message}</span>
+              )}
+            </label>
+
+            {/* Name */}
+
+            <label className="form-control w-full">
+              <span className="label-text mb-2">Name</span>
+              <input
+                readOnly
+                defaultValue={user?.displayName}
+                {...register("name", { required: "Name is required" })}
+                type="text"
+                className="input input-bordered w-full"
+              />
+              {errors.name && (
+                <span className="text-red-500">{errors.name.message}</span>
+              )}
+            </label>
+
+            {/* Email */}
+
+            <label className="form-control w-full ">
+              <span className="label-text mb-2">Email</span>
+              <input
+                readOnly
+                defaultValue={user?.email}
+                {...register("email", { required: "Email is required" })}
+                type="text"
+                className="input input-bordered w-full"
+              />
+              {errors.email && (
+                <span className="text-red-500">{errors.email.message}</span>
+              )}
+            </label>
+
+            {/* Photo file upload */}
+            <div className="hidden md:flex w-full mt-4  justify-left rounded-md gap-4 items-end">
+            {!photoFile ? (
+              <label htmlFor="photoFile" className="cursor-pointer w-full">
+                <div className="flex items-center justify-center w-full bg-white text-black py-3 px-4 rounded-lg shadow-md hover:bg-blue-200 transition-all duration-200">
+                  <span>Upload Photo</span>
+                </div>
+              </label>
+            ) : (
+              <div className="flex items-center gap-4 w-full">
+                <img
+                  src={URL.createObjectURL(photoFile)}
+                  alt="Uploaded Preview"
+                  className="w-20 h-12 object-cover rounded-md"
+                />
+                <label htmlFor="photoFile" className="cursor-pointer w-full">
+                  <div className="flex items-center justify-center w-full bg-white text-black py-3 px-4 rounded-lg shadow-md hover:bg-blue-200 transition-all duration-200">
+                    <span>Change Photo</span>
+                  </div>
+                </label>
+              </div>
+            )}
             <input
               id="photoFile"
               type="file"
@@ -272,34 +301,22 @@ const AddMeal = () => {
               className="hidden"
               onChange={handleFileChange}
             />
-            {photoFile && (
-              <div>
-                <img
-                  src={URL.createObjectURL(photoFile)}
-                  alt="Uploaded Preview"
-                  className="w-20 h-10 object-cover rounded-md"
-                />
-              </div>
-            )}
             {errors?.photoFile?.message && (
               <span className="text-red-500 text-xs sm:text-sm lg:text-base mt-1">
                 {errors?.photoFile?.message}
               </span>
             )}
-            {errors.email && (
-              <span className="text-red-500">{errors.email.message}</span>
-            )}
           </div>
-          {/* description */}
-          <div className=" col-span-2">
-            <label className="form-control">
+            {/* description */}
+            <div className="w-full hidden md:flex mt-4 col-span-2">
+            <label className="form-control w-full">
               <span className="label-text mb-2">Description</span>
               <textarea
                 {...register("description", {
-                  required: "description is required",
+                  required: "Description is required",
                 })}
-                placeholder="description"
-                className="textarea textarea-bordered col-span-2 "
+                placeholder="Description"
+                className="textarea textarea-bordered w-full"
               ></textarea>
               {errors.description && (
                 <span className="text-red-500">
@@ -308,16 +325,76 @@ const AddMeal = () => {
               )}
             </label>
           </div>
-        </div>
-        <button
-          type="submit"
-          className="justify-center px-6 bg-blue-500 text-white py-2 mt-4 rounded-lg shadow-md hover:bg-blue-600 transition-all duration-200"
-        >
-          Add Meal
-        </button>
-      </form>
+   
+          </div>
+          {/* Photo file upload for phone responsive*/}
+          <div className="md:hidden w-full mt-4 flex justify-left rounded-md gap-4 items-end">
+            {!photoFile ? (
+              <label htmlFor="photoFile" className="cursor-pointer w-full">
+                <div className="flex items-center justify-center w-full bg-white text-black py-3 px-4 rounded-lg shadow-md hover:bg-blue-200 transition-all duration-200">
+                  <span>Upload Photo</span>
+                </div>
+              </label>
+            ) : (
+              <div className="flex items-center gap-4 w-full">
+                <img
+                  src={URL.createObjectURL(photoFile)}
+                  alt="Uploaded Preview"
+                  className="w-20 h-12 object-cover rounded-md"
+                />
+                <label htmlFor="photoFile" className="cursor-pointer w-full">
+                  <div className="flex items-center justify-center w-full bg-white text-black py-3 px-4 rounded-lg shadow-md hover:bg-blue-200 transition-all duration-200">
+                    <span>Change Photo</span>
+                  </div>
+                </label>
+              </div>
+            )}
+            <input
+              id="photoFile"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleFileChange}
+            />
+            {errors?.photoFile?.message && (
+              <span className="text-red-500 text-xs sm:text-sm lg:text-base mt-1">
+                {errors?.photoFile?.message}
+              </span>
+            )}
+          </div>
+
+          {/* description for phone responsive*/}
+          <div className="w-full md:hidden mt-4 flex">
+            <label className="form-control w-full">
+              <span className="label-text mb-2">Description</span>
+              <textarea
+                {...register("description", {
+                  required: "Description is required",
+                })}
+                placeholder="Description"
+                className="textarea textarea-bordered w-full"
+              ></textarea>
+              {errors.description && (
+                <span className="text-red-500">
+                  {errors.description.message}
+                </span>
+              )}
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            className="justify-center px-6 w-full md:w-80 bg-blue-500 text-white py-2 mt-4 rounded-lg shadow-md hover:bg-blue-600 transition-all duration-200"
+          >
+            Add Meal
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
 
 export default AddMeal;
+
+
+

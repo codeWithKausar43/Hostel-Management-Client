@@ -21,7 +21,7 @@ const Membership = () => {
   };
 
   return (
-    <div className="container mx-auto py-10 mt-16">
+    <div className="mx-auto py-10 mt-16 md:w-[90%] lg:w-[70%]">
       <h2 className="text-3xl font-bold text-center mb-8">
         Upgrade to Membership
       </h2>

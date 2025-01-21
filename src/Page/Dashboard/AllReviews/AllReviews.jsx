@@ -58,7 +58,7 @@ const AllReviews = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setInputValue("");
-    setMealId(null); 
+    setMealId(null);
   };
 
   const handleSubmit = async () => {
@@ -84,6 +84,7 @@ const AllReviews = () => {
     handleCloseModal();
   };
 
+  console.log(myallReviews);
   return (
     <div>
       {myallReviews.length > 0 ? (
@@ -93,7 +94,7 @@ const AllReviews = () => {
               My Review : ( {myallReviews.length} )
             </h3>
             <table className="table">
-              <thead>
+              <thead className="md:text-xl text-lg text-black">
                 <tr>
                   <th>#</th>
                   <th>Title</th>
@@ -105,12 +106,11 @@ const AllReviews = () => {
                   <tr key={review._id}>
                     <th>{i + 1}</th>
                     <td>
-                      <div className="flex items-center gap-3">
-                        <div className="avatar">
-                          <div className="mask mask-squircle h-12 w-12">
-                            <img src={review.meal_photoUrl} alt="Meal" />
-                          </div>
+                      <div className="md:flex items-center gap-3">
+                        <div className="mask avatar mask-squircle h-12 w-12">
+                          <img src={review.meal_photoUrl} alt="Meal" />
                         </div>
+
                         <div>
                           <div className="font-bold">{review.title}</div>
                           <div className="text-sm opacity-50 flex gap-2 items-center">

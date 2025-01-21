@@ -13,7 +13,7 @@ const AllMeals = () => {
   }
 
   // Categorize meals
-  const Upcoming = meals.filter((item) => item.category === "Upcoming");
+  // const Upcoming = meals.filter((item) => item.category === "Upcoming");
   const Dinner = meals.filter((item) => item.category === "Dinner");
   const Lunch = meals.filter((item) => item.category === "Lunch");
   const Breakfast = meals.filter((item) => item.category === "Breakfast");

@@ -29,6 +29,7 @@ import AllRequest from "../Page/Dashboard/AllRequest/AllRequest";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import ServeMeals from "../Page/Dashboard/ServeMeals/ServeMeals";
+import AdminUpcomingMeals from "../Page/Dashboard/AdminUpcomingMeals/AdminUpcomingMeals";
  
 
 const router = createBrowserRouter([
@@ -135,7 +136,11 @@ const router = createBrowserRouter([
       },
       {
         path:"/dashboard/membershipCardUpdate/:id",
-        element:<UpdateMembershipCard></UpdateMembershipCard>
+        element:<PrivateRoute><AdminRoute><UpdateMembershipCard></UpdateMembershipCard></AdminRoute></PrivateRoute>
+      },
+      {
+        path:"/dashboard/upcomingMeals",
+        element:<PrivateRoute><AdminRoute><AdminUpcomingMeals></AdminUpcomingMeals></AdminRoute></PrivateRoute>
       },
        
     ]

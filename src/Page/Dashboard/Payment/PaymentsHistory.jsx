@@ -15,30 +15,34 @@ const PaymentsHistory = () => {
   });
   
   return (
-    <div>
-      <h2>Your Payment History</h2>
+    <div className="mt-12 md:w-[90%] w-full mx-auto">
+      <h2 className="md:text-xl text-lg text-black font-bold">My Payment History</h2>
       
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
           <thead>
             <tr>
+            <th>#</th>
               <th>Amount</th>
-              <th>transactionId</th>
+              <th className="hidden md:flex">transactionId</th>
               <th>Date</th>
               <th>Badge</th>
             </tr>
           </thead>
           <tbody>
             {/* row 1 */}
-            {paymentHistory.map((history) => (
+            {paymentHistory.map((history,i) => (
               <tr>
+                <td>
+                   {i+1}
+                </td>
                 <td>
                   <div className="font-bold">
                     <p>${history.price}</p>
                   </div>
                 </td>
-                <td>
+                <td className=" hidden md:flex">
                   <span className="badge badge-ghost badge-sm">
                     {history.transactionId}
                   </span>

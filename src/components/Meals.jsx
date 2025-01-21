@@ -93,7 +93,7 @@ const Meals = () => {
 
       {/* Meals Display */}
       {
-        isLoading ? <div className="min-h-14">loadin..</div>:<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-8">
+        isLoading ? <span className="loading loading-bars loading-md flex mx-auto items-center md:mt-60"></span>:<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-8">
         {meals.map((meal) => (
           <MealCard key={meal._id} item={meal} />
         ))}

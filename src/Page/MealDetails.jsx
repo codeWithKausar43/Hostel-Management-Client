@@ -50,7 +50,8 @@ const MealDetails = () => {
       title,
       meal_photoUrl: meal.photoUrl,
       like: {
-        like_count: 0,
+        like_count:meal.like?.like_count,
+        review_count:reviews.length,
       },
       user: {
         name: user?.displayName,
@@ -134,6 +135,7 @@ const MealDetails = () => {
     const requestInfo = {
       requestMeal_id: id,
       email: user?.email,
+      username: user?.displayName,
       title: meal.title,
       status: "pending",
       photoUrl: meal.photoUrl,
@@ -199,7 +201,7 @@ const MealDetails = () => {
               </p>
             </div>
             <div className="divider"></div>
-            <div className="grid md:grid-cols-4  grid-cols-2 mb-2 text-2xl">
+            <div className="grid md:grid-cols-4 items-end justify-end  grid-cols-2 mb-2 text-2xl">
               <p className="text-lg"> {meal.category}</p>
               <p className="text-lg">${meal.price}</p>
               <p
@@ -221,7 +223,7 @@ const MealDetails = () => {
                 onClick={() => handleRequestMeal(meal._id)}
                 className="btn mt-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105"
               >
-                Request Meal
+                Request Meal 
               </button>
             </p>
           </div>
