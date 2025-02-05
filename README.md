@@ -159,7 +159,7 @@ Refer to the backend API documentation for full details.
 
 ## 👨‍💻 Contributors
 
-- **[Your Name](https://github.com/your-username)** - Developer  
+- **[Your Name](https://github.com/your-username)** - Kausar Ahammed  
 - Open to contributions! Feel free to **fork** and submit a **pull request**. 🚀  
 
 ---
